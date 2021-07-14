@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Marketplace</string>
+    <string name="btn_profile">Perfil</string>
+    <string name="btn_config">Configuración</string>
+    <string name="btn_about">Acerca de</string>
+    <string name="btn_close">Cerrar</string>
+    <string name="btn_login">INGRESAR</string>
+    <string name="btn_register">REGISTRARSE</string>
+    <string name="btn_accept">Aceptar</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="et_username">Nombre de usuario</string>
+    <string name="et_password">Contraseña</string>
+    <string name="et_names">Nombres</string>
+    <string name="et_surnames">Apellidos</string>
+    <string name="et_email">Correo electronico</string>
+    <string name="et_phonenumber">Número  teléfonico</string>
+    <string name="txt_tittle_login">Ingresar</string>
+    <string name="txt_tittle_register">Registrarse</string>
+    <string name="txt_error_login">Error al ingresar</string>
+    <string name="txt_success_login">Ingreso satisfactorio</string>
+    <string name="txt_names">Nombres</string>
+    <string name="txt_surnames">Apellidos</string>
+    <string name="txt_email">Correo electronico</string>
+    <string name="txt_password">Contraseña</string>
+    <string name="txt_phonenumber">Número  teléfonico</string>
+    <string name="txt_msg_register">Usuario registrado</string>
+    <string name="title_activity_pantalla_principal">PantallaPrincipal</string>
+    <string name="navigation_drawer_open">Cajon de navegación abierto</string>
+    <string name="navigation_drawer_close">Cerrar el cajón de navegación</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Encabezado de navegación</string>
+    <string name="action_settings">Configuracion</string>
+    <string name="menu_home">Casa</string>
+    <string name="menu_gallery">Galeria</string>
+    <string name="menu_slideshow">Diapositivas</string>
+</resources>

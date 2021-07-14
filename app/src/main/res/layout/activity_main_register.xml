@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".MainActivityRegister"
     android:orientation="vertical">
 
     <LinearLayout
@@ -14,10 +14,13 @@
         android:layout_margin="16dp"
         android:gravity="center">
 
-        <ImageView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/principal"/>
+            android:layout_marginVertical="20dp"
+            android:text="@string/txt_tittle_register"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
 
     </LinearLayout>
 
@@ -31,9 +34,37 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/txt_names"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/et_names"
+            android:id="@+id/et_names"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_surnames"
+            android:textColor="@color/black"
+            android:layout_marginTop="25dp"
+            android:textSize="20sp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/et_surnames"
+            android:id="@+id/et_surnames"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/txt_email"
             android:textColor="@color/black"
-            android:textSize="25sp"/>
+            android:layout_marginTop="25dp"
+            android:textSize="20sp"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -46,8 +77,7 @@
             android:layout_height="wrap_content"
             android:text="@string/txt_password"
             android:textColor="@color/black"
-            android:layout_marginTop="25dp"
-            android:textSize="25sp"/>
+            android:textSize="20sp"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -56,18 +86,24 @@
             android:id="@+id/et_password"
             android:inputType="textPassword"/>
 
-        <Button
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_phonenumber"
+            android:textColor="@color/black"
+            android:layout_marginTop="25dp"
+            android:textSize="20sp"/>
+
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:text="@string/btn_login"
-            android:onClick="login"
-            android:id="@+id/btn_login"/>
+            android:hint="@string/et_phonenumber"
+            android:id="@+id/et_phonenumber"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="15dp"
             android:text="@string/btn_register"
             android:onClick="register"
             android:id="@+id/btn_register"/>
