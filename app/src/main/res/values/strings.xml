@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Marketplace</string>
+    <!--    Ventana login-->
+    <string name="btn_play">Play</string>
+    <string name="btn_profile">Profile</string>
+    <string name="btn_config">Configuration</string>
+    <string name="btn_about">About</string>
+    <string name="btn_close">Close</string>
+    <string name="et_input1">Input Text</string>
+    <string name="et_username">Username</string>
+    <string name="et_password">Password</string>
+    <string name="btn_login">LOGIN</string>
+    <string name="btn_register">REGISTER</string>
+    <string name="txt_tittle_login">Login</string>
+    <string name="txt_error_login">Error login</string>
+    <string name="txt_success_login">Succesfull login</string>
+    <string name="btn_accept">Accept</string>
+    <string name="btn_cancel">Cancel</string>
+</resources>
