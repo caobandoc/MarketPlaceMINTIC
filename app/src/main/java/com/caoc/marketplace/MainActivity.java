@@ -62,9 +62,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loginAccept(String username,String password){
+        /*
         Intent activity2 = new Intent(this, MainActivity2.class);
         activity2.putExtra("username", username);
         activity2.putExtra("password", password);
         startActivity(activity2);
+        */
+        Log.e("LOGIN", "Aceptado");
     }
 }
