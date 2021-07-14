@@ -11,47 +11,59 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.HashMap;
+import com.caoc.marketplace.ui.User;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText et_username;
+    private EditText et_email;
     private EditText et_password;
 
     private Button btn_login;
     private Button btn_register;
 
-    private HashMap<String, String> users = new HashMap <String, String> ();
+    private ArrayList<User> users = new ArrayList<User>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        users.put("admin", "admin");
+        User admin = new User("admin", "admin", "admin@gmail.com","admin","3204694115");
+        users.add(admin);
 
-        et_username = findViewById(R.id.et_username);
+        et_email = findViewById(R.id.et_email);
         et_password = findViewById(R.id.et_password);
         btn_login = findViewById(R.id.btn_login);
         btn_register = findViewById(R.id.btn_login);
     }
 
+    public void register(View v){
+        Intent register = new Intent(this, MainActivityRegister.class);
+
+        Bundle args = new Bundle();
+        args.putSerializable("ARRAYLIST",(Serializable)users);
+        register.putExtra("BUNDLE",args);
+
+        startActivity(register);
+    }
+
     public void login(View v) {
-        String username = et_username.getText().toString();
+        String email = et_email.getText().toString();
         String password = et_password.getText().toString();
-        //Log.e("USERNAME", username);
-        //Log.e("PASSWORD", password);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.txt_tittle_login);
 
-        if (validateLogin(username,password)) {
+        if (validateLogin(email,password)) {
 
             builder.setMessage(R.string.txt_success_login);
             builder.setPositiveButton(R.string.btn_accept, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    loginAccept(username, password);
+                    loginAccept(email, password);
                 }
             });
             builder.setNegativeButton(R.string.btn_cancel, null);
@@ -67,20 +79,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public boolean validateLogin(String user, String pass){
+    public boolean validateLogin(String email, String pass){
         boolean test = false;
-        if (pass.equals(users.get(user)))
-            test = true;
+        for(User user : users){
+            if(email.equals(user.getEmail())){
+                if(pass.equals(user.getPassword())){
+                    test = true;
+                    break;
+                }
+            }
+        }
         return test;
     }
 
     public void loginAccept(String username,String password){
-        /*
-        Intent activity2 = new Intent(this, MainActivity2.class);
+
+        Intent activity2 = new Intent(this, PantallaPrincipal.class);
         activity2.putExtra("username", username);
         activity2.putExtra("password", password);
         startActivity(activity2);
-        */
+
         Log.e("LOGIN", "Aceptado");
     }
 }

@@ -1,22 +1,34 @@
 <resources>
     <string name="app_name">Marketplace</string>
-    <!--    Ventana login-->
-    <string name="btn_play">Play</string>
+<!--    BUTTONS-->
     <string name="btn_profile">Profile</string>
     <string name="btn_config">Configuration</string>
     <string name="btn_about">About</string>
     <string name="btn_close">Close</string>
-    <string name="et_input1">Input Text</string>
-    <string name="et_username">Username</string>
-    <string name="et_password">Password</string>
     <string name="btn_login">LOGIN</string>
     <string name="btn_register">REGISTER</string>
-    <string name="txt_tittle_login">Login</string>
-    <string name="txt_error_login">Error login</string>
-    <string name="txt_success_login">Succesfull login</string>
     <string name="btn_accept">Accept</string>
     <string name="btn_cancel">Cancel</string>
-    <string name="title_activity_pantalla_principal">PantallaPrincipal</string>
+<!--    EDITTEXTS-->
+    <string name="et_username">Username</string>
+    <string name="et_password">Password</string>
+    <string name="et_names">Names</string>
+    <string name="et_surnames">Surnames</string>
+    <string name="et_email">Email</string>
+    <string name="et_phonenumber">Phone number</string>
+<!--    TEXTVIEW-->
+    <string name="txt_tittle_login">Login</string>
+    <string name="txt_tittle_register">Register</string>
+    <string name="txt_error_login">Error login</string>
+    <string name="txt_success_login">Succesfull login</string>
+    <string name="txt_names">Names</string>
+    <string name="txt_surnames">Surnames</string>
+    <string name="txt_email">Email</string>
+    <string name="txt_password">Password</string>
+    <string name="txt_phonenumber">Phone Number</string>
+    <string name="txt_msg_register">Registered user</string>
+
+    <string name="title_activity_pantalla_principal">ScreenPrincipal</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -27,4 +39,9 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+
+
+
+
+
 </resources>
