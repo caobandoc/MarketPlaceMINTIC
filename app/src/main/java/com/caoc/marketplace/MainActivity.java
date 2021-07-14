@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText et_username;
@@ -19,10 +21,14 @@ public class MainActivity extends AppCompatActivity {
     private Button btn_login;
     private Button btn_register;
 
+    private HashMap<String, String> users = new HashMap <String, String> ();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        users.put("admin", "admin");
 
         et_username = findViewById(R.id.et_username);
         et_password = findViewById(R.id.et_password);
@@ -33,13 +39,13 @@ public class MainActivity extends AppCompatActivity {
     public void login(View v) {
         String username = et_username.getText().toString();
         String password = et_password.getText().toString();
-        Log.e("USERNAME", username);
-        Log.e("PASSWORD", password);
+        //Log.e("USERNAME", username);
+        //Log.e("PASSWORD", password);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.txt_tittle_login);
-        if (username.equals("admin") && password.equals("admin")) {
-            Log.e("LOGIN", "Se ha iniciado sesion");
+
+        if (validateLogin(username,password)) {
 
             builder.setMessage(R.string.txt_success_login);
             builder.setPositiveButton(R.string.btn_accept, new DialogInterface.OnClickListener() {
@@ -59,6 +65,13 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
         }
+    }
+
+    public boolean validateLogin(String user, String pass){
+        boolean test = false;
+        if (pass.equals(users.get(user)))
+            test = true;
+        return test;
     }
 
     public void loginAccept(String username,String password){
