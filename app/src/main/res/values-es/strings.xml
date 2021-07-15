@@ -35,4 +35,6 @@
     <string name="menu_home">Casa</string>
     <string name="menu_gallery">Galeria</string>
     <string name="menu_slideshow">Diapositivas</string>
+    <string name="sw_terms">Acepto la política de declaración de privacidad y los términos y condiciones de uso del sitio.</string>
+    <string name="txt_msg_fail">Los datos son incorrectos</string>
 </resources>

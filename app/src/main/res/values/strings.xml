@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Marketplace</string>
-<!--    BUTTONS-->
+    <!--    BUTTONS-->
     <string name="btn_profile">Profile</string>
     <string name="btn_config">Configuration</string>
     <string name="btn_about">About</string>
@@ -9,14 +9,14 @@
     <string name="btn_register">REGISTER</string>
     <string name="btn_accept">Accept</string>
     <string name="btn_cancel">Cancel</string>
-<!--    EDITTEXTS-->
+    <!--    EDITTEXTS-->
     <string name="et_username">Username</string>
     <string name="et_password">Password</string>
     <string name="et_names">Names</string>
     <string name="et_surnames">Surnames</string>
     <string name="et_email">Email</string>
     <string name="et_phonenumber">Phone number</string>
-<!--    TEXTVIEW-->
+    <!--    TEXTVIEW-->
     <string name="txt_tittle_login">Login</string>
     <string name="txt_tittle_register">Register</string>
     <string name="txt_error_login">Error login</string>
@@ -27,6 +27,10 @@
     <string name="txt_password">Password</string>
     <string name="txt_phonenumber">Phone Number</string>
     <string name="txt_msg_register">Registered user</string>
+    <string name="txt_msg_fail">The data is incorrect</string>
+
+    <!--    SWITCH-->
+    <string name="sw_terms">I accept the privacy statement policy and terms and conditions of use of the site.</string>
 
     <string name="title_activity_pantalla_principal">ScreenPrincipal</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
