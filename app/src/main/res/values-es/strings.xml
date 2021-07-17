@@ -13,12 +13,12 @@
     <string name="et_password">Contraseña</string>
     <string name="et_names">Nombres</string>
     <string name="et_surnames">Apellidos</string>
-    <string name="et_email">Correo electronico</string>
+    <string name="et_email">ejemplo@gmail.com</string>
     <string name="et_phonenumber">Número  teléfonico</string>
     <string name="txt_tittle_login">Ingresar</string>
     <string name="txt_tittle_register">Registrarse</string>
     <string name="txt_error_login">Error al ingresar</string>
-    <string name="txt_success_login">Ingreso satisfactorio</string>
+    <string name="txt_success_login">Ingreso correcto</string>
     <string name="txt_names">Nombres</string>
     <string name="txt_surnames">Apellidos</string>
     <string name="txt_email">Correo electronico</string>
@@ -35,4 +35,9 @@
     <string name="menu_home">Casa</string>
     <string name="menu_gallery">Galeria</string>
     <string name="menu_slideshow">Diapositivas</string>
+    <string name="sw_terms">Acepto la política de declaración de privacidad y los términos y condiciones de uso del sitio.</string>
+    <string name="txt_msg_fail">Los datos son incorrectos</string>
+    <string name="menu_product">Productos</string>
+    <string name="txt_msg_error_register">Error al registrar usuario</string>
+    <string name="txt_error">ERROR</string>
 </resources>

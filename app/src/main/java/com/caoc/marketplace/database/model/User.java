@@ -1,8 +1,14 @@
-package com.caoc.marketplace.ui;
+package com.caoc.marketplace.database.model;
 
-import java.io.Serializable;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
-public class User implements Serializable {
+@Entity
+public class User {
+
+    @PrimaryKey(autoGenerate = true)
+    private long id;
     private String name;
     private String surname;
     private String email;
@@ -15,6 +21,18 @@ public class User implements Serializable {
         this.email = email;
         this.password = password;
         this.phone = phone;
+    }
+
+    @Ignore
+    public User(){
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
