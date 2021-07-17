@@ -3,19 +3,16 @@ package com.caoc.marketplace;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Switch;
 
-import com.caoc.marketplace.ui.User;
+import com.caoc.marketplace.database.UserDatabase;
+import com.caoc.marketplace.database.model.User;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,8 +27,6 @@ public class MainActivityRegister extends AppCompatActivity {
     private Button btn_register;
 
     private CheckBox cb_term;
-
-    private ArrayList<User> users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +43,6 @@ public class MainActivityRegister extends AppCompatActivity {
 
         cb_term = findViewById(R.id.cb_term);
 
-        Intent intent = getIntent();
-        Bundle args = intent.getBundleExtra("BUNDLE");
-        users = (ArrayList<User>) args.getSerializable("ARRAYLIST");
     }
 
     public void register(View v){
@@ -65,12 +57,33 @@ public class MainActivityRegister extends AppCompatActivity {
         if(this.validate(names,surnames,email,password,phonenumber)){
             User user = new User(names,surnames,email,password,phonenumber);
 
-            users.add(user);
+            UserDatabase userDatabase = UserDatabase.getInstance(this);
 
-            builder.setMessage(R.string.txt_msg_register);
+            long response = userDatabase.getUserDao().insertUser(user);
+
+            if(response > 0){
+
+                builder.setPositiveButton(R.string.btn_accept, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+
+                builder.setMessage(R.string.txt_msg_register);
+
+
+
+            }else{
+                builder.setMessage(R.string.txt_msg_error_register);
+
+            }
 
             AlertDialog dialog = builder.create();
+
             dialog.show();
+
+
         }else{
             builder.setMessage(R.string.txt_msg_fail);
 

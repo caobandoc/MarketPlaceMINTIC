@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.caoc.marketplace.ui.User;
+import com.caoc.marketplace.database.model.User;
 
 import java.io.Serializable;
 import java.util.ArrayList;

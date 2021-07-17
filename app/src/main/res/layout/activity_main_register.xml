@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/et_email"
             android:id="@+id/et_email"
-            android:inputType="textEmailSubject"/>
+            android:inputType="textEmailAddress"/>
 
         <TextView
             android:layout_width="wrap_content"

@@ -14,7 +14,7 @@
     <string name="et_password">Password</string>
     <string name="et_names">Names</string>
     <string name="et_surnames">Surnames</string>
-    <string name="et_email">Email</string>
+    <string name="et_email">example@gmail.com</string>
     <string name="et_phonenumber">Phone number</string>
     <!--    TEXTVIEW-->
     <string name="txt_tittle_login">Login</string>
@@ -27,7 +27,9 @@
     <string name="txt_password">Password</string>
     <string name="txt_phonenumber">Phone Number</string>
     <string name="txt_msg_register">Registered user</string>
+    <string name="txt_msg_error_register">Registered user fail</string>
     <string name="txt_msg_fail">The data is incorrect</string>
+    <string name="txt_error">ERROR</string>
 
     <!--    SWITCH-->
     <string name="sw_terms">I accept the privacy statement policy and terms and conditions of use of the site.</string>
@@ -41,11 +43,9 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
+    <string name="menu_product">Products</string>
     <string name="menu_slideshow">Slideshow</string>
-
-
-
+    <string name="menu_gallery">Gallery</string>
 
 
 </resources>
