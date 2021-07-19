@@ -4,15 +4,18 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import com.caoc.marketplace.database.UserDatabase;
+import com.caoc.marketplace.database.Database;
 import com.caoc.marketplace.database.model.User;
 
+import java.lang.ref.WeakReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,6 +30,11 @@ public class MainActivityRegister extends AppCompatActivity {
     private Button btn_register;
 
     private CheckBox cb_term;
+
+    private Database database;
+
+    private User userDb = new User();
+    private User userCreate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,45 +60,45 @@ public class MainActivityRegister extends AppCompatActivity {
         String password = et_password.getText().toString();
         String phonenumber = et_phonenumber.getText().toString();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.txt_tittle_register);
-        if(this.validate(names,surnames,email,password,phonenumber)){
-            User user = new User(names,surnames,email,password,phonenumber);
+        database = Database.getInstance(this);
 
-            UserDatabase userDatabase = UserDatabase.getInstance(this);
+        if(this.validate(names,surnames,email,password,phonenumber)) {
+            userCreate = new User(names, surnames, email, password, phonenumber);
 
-            long response = userDatabase.getUserDao().insertUser(user);
-
-            if(response > 0){
-
-                builder.setPositiveButton(R.string.btn_accept, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-
-                builder.setMessage(R.string.txt_msg_register);
-
-
-
-            }else{
-                builder.setMessage(R.string.txt_msg_error_register);
-
-            }
-
-            AlertDialog dialog = builder.create();
-
-            dialog.show();
-
-
+            new GetUserTask(this).execute();
         }else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.txt_title_register);
+
             builder.setMessage(R.string.txt_msg_fail);
 
             AlertDialog dialog = builder.create();
             dialog.show();
         }
+    }
 
+    public void registerOk(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.txt_title_register);
+
+        database.getUserDao().insertUser(userCreate);
+
+        builder.setPositiveButton(R.string.btn_accept, new DialogInterface.OnClickListener() {
+           @Override
+           public void onClick(DialogInterface dialog, int which) {
+               finish();
+           }
+        });
+
+        builder.setMessage(R.string.txt_msg_register);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
+    public void registerError(){
+        Toast.makeText(this, R.string.txt_msg_fail_exist, Toast.LENGTH_SHORT).show();
     }
 
     public void accept(View v){
@@ -139,5 +147,34 @@ public class MainActivityRegister extends AppCompatActivity {
         return true;
     }
 
+    private static class GetUserTask extends AsyncTask<Void, Void, User> {
+
+        private WeakReference<MainActivityRegister> activityWeakReference;
+
+        GetUserTask(MainActivityRegister context){
+            activityWeakReference = new WeakReference<>(context);
+        }
+
+
+        @Override
+        protected User doInBackground(Void... voids) {
+            if(activityWeakReference != null){
+                User user = activityWeakReference.get().database.getUserDao().getUser(activityWeakReference.get().userCreate.getEmail());
+                return user;
+            }else {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(User user){
+            if(user != null){
+                activityWeakReference.get().registerError();
+            }else{
+                activityWeakReference.get().registerOk();
+            }
+            super.onPostExecute(user);
+        }
+    }
 
 }

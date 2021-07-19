@@ -1,6 +1,7 @@
 package com.caoc.marketplace.ui.product;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,20 +10,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.caoc.marketplace.R;
+import com.caoc.marketplace.database.Database;
+import com.caoc.marketplace.database.model.Product;
 import com.caoc.marketplace.databinding.FragmentProductBinding;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import java.lang.ref.WeakReference;
+import java.util.List;
 
 public class ProductFragment extends Fragment {
 
@@ -34,11 +37,11 @@ public class ProductFragment extends Fragment {
 
     private Activity myself;
 
-    String text = "[{\"id\":\"1\",\"name\":\"Placa madre\",\"descripcion\":\"Tarjeta donde se conectan todos los componentes de un computador\",\"image\":\"https://images-na.ssl-images-amazon.com/images/I/81TbXzYLzUL._AC_SL1500_.jpg\",\"price\":\"500000\"},{\"id\":\"2\",\"name\":\"Procesador\",\"descripcion\":\"El nucleo de una computadora\",\"image\":\"https://images-na.ssl-images-amazon.com/images/I/614Oc4WrCeL._AC_SL1500_.jpg\",\"price\":\"900000\"},{\"id\":\"3\",\"name\":\"Ram\",\"descripcion\":\"Memorias de acceso rapido\",\"image\":\"https://images-na.ssl-images-amazon.com/images/I/71-cxf0ku8L._AC_SL1200_.jpg\",\"price\":\"500000\"},{\"id\":\"4\",\"name\":\"Disipador\",\"descripcion\":\"Viene con un ventilador para enfriar el procesador\",\"image\":\"https://images-na.ssl-images-amazon.com/images/I/71ew8nPq9kL._AC_SL1200_.jpg\",\"price\":\"500000\"}]";
+    private Database database;
+
+    private List<Product> products;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-
 
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
 
@@ -50,9 +53,27 @@ public class ProductFragment extends Fragment {
 
         myself = getActivity();
 
+        database = Database.getInstance(getActivity());
+
+        /*
+        Product prod1 = new Product("Tarjeta Grafica","Tarjeta encargada de generar las imagenes","https://images-na.ssl-images-amazon.com/images/I/81IGSLMN16L._AC_SL1500_.jpg","1370000");
+        Product prod2 = new Product("Procesador","El nucleo de una computadora","https://images-na.ssl-images-amazon.com/images/I/614Oc4WrCeL._AC_SL1500_.jpg", "900000");
+        Product prod3 = new Product("Ram","Memorias de acceso rapido","https://images-na.ssl-images-amazon.com/images/I/71-cxf0ku8L._AC_SL1200_.jpg","500000");
+        Product prod4 = new Product("Disipador","Viene con un ventilador para enfriar el procesador", "https://images-na.ssl-images-amazon.com/images/I/71ew8nPq9kL._AC_SL1200_.jpg","500000");
+        Product prod5 = new Product("Placa madre","Tarjeta donde se conectan todos los componentes de un computador","https://images-na.ssl-images-amazon.com/images/I/81TbXzYLzUL._AC_SL1500_.jpg","500000");
+        database.getProductDao().insertProduct(prod1);
+        database.getProductDao().insertProduct(prod2);
+        database.getProductDao().insertProduct(prod3);
+        database.getProductDao().insertProduct(prod4);
+        database.getProductDao().insertProduct(prod5);
+        */
+
+        new GetProductTask(ProductFragment.this).execute();
+
+
         rv_products = root.findViewById(R.id.reciclerViewProducts);
         rv_products.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        /*
         try {
             JSONArray json = new JSONArray(text);
             mAdapter = new ProductAdapter(json, myself);
@@ -62,7 +83,7 @@ public class ProductFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        */
         return root;
     }
 
@@ -71,18 +92,56 @@ public class ProductFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+    private void loadProducts(){
+
+        mAdapter = new ProductAdapter(products, myself);
+        rv_products.setAdapter(mAdapter);
+
+    }
+
+    private static class GetProductTask extends AsyncTask<Void, Void, List<Product>>{
+
+        private WeakReference<ProductFragment> activityWeakReference;
+
+        GetProductTask(ProductFragment context){
+            activityWeakReference = new WeakReference<>(context);
+        }
+
+
+        @Override
+        protected List<Product> doInBackground(Void... voids) {
+
+            if(activityWeakReference != null){
+                List<Product> products = activityWeakReference.get().database.getProductDao().getProduct();
+                return products;
+            }else {
+                return null;
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(List<Product> products){
+            if(products != null && products.size() > 0){
+                activityWeakReference.get().products = products;
+                activityWeakReference.get().loadProducts();
+            }
+            super.onPostExecute(products);
+        }
+    }
 }
 
 class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
-    private JSONArray productModelList;
+    private List<Product> productModelList;
     private Activity myself;
 
-    public ProductAdapter(JSONArray productModelList){
+    public ProductAdapter(List<Product> productModelList){
         this.productModelList = productModelList;
     }
 
-    public ProductAdapter(JSONArray productModelList, Activity myself){
+    public ProductAdapter(List<Product> productModelList, Activity myself){
         this.productModelList = productModelList;
         this.myself = myself;
     }
@@ -96,23 +155,19 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(ProductAdapter.ViewHolder holder, int position) {
-        try{
-            String name = this.productModelList.getJSONObject(position).getString("name");
-            String description = this.productModelList.getJSONObject(position).getString("descripcion");
-            String urlImage = this.productModelList.getJSONObject(position).getString("image");
-            holder.name.setText(name);
-            holder.description.setText(description);
+        String name = this.productModelList.get(position).getName();
+        String description = this.productModelList.get(position).getDescription();
+        String urlImage = this.productModelList.get(position).getImage();
+        holder.name.setText(name);
+        holder.description.setText(description);
 
-            Glide.with(myself).load(urlImage).into(holder.image);
+        Glide.with(myself).load(urlImage).into(holder.image);
 
-        }catch (JSONException e){
-            holder.name.setText(R.string.txt_error);
-        }
     }
 
     @Override
     public int getItemCount(){
-        return productModelList.length();
+        return productModelList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

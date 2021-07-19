@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Marketplace</string>
-    <!--    BUTTONS-->
+
+    <!--BUTTONS-->
     <string name="btn_profile">Profile</string>
     <string name="btn_config">Configuration</string>
     <string name="btn_about">About</string>
@@ -9,16 +10,22 @@
     <string name="btn_register">REGISTER</string>
     <string name="btn_accept">Accept</string>
     <string name="btn_cancel">Cancel</string>
-    <!--    EDITTEXTS-->
+
+    <!--EDITTEXTS-->
     <string name="et_username">Username</string>
     <string name="et_password">Password</string>
     <string name="et_names">Names</string>
     <string name="et_surnames">Surnames</string>
     <string name="et_email">example@gmail.com</string>
     <string name="et_phonenumber">Phone number</string>
-    <!--    TEXTVIEW-->
-    <string name="txt_tittle_login">Login</string>
-    <string name="txt_tittle_register">Register</string>
+    <string name="et_name_product">Product Name</string>
+    <string name="et_description">Describe your product</string>
+    <string name="et_image">https://www.image.com</string>
+    <string name="et_price">500000</string>
+
+    <!--TEXTVIEW-->
+    <string name="txt_title_login">Login</string>
+    <string name="txt_title_register">Register</string>
     <string name="txt_error_login">Error login</string>
     <string name="txt_success_login">Succesfull login</string>
     <string name="txt_names">Names</string>
@@ -29,9 +36,15 @@
     <string name="txt_msg_register">Registered user</string>
     <string name="txt_msg_error_register">Registered user fail</string>
     <string name="txt_msg_fail">The data is incorrect</string>
+    <string name="txt_msg_fail_exist">There is already a registered user with that email</string>
     <string name="txt_error">ERROR</string>
+    <string name="txt_title_add_product">Add Product</string>
+    <string name="txt_name_product">Product Name</string>
+    <string name="txt_description">Description</string>
+    <string name="txt_image">Image URL</string>
+    <string name="txt_price">Price</string>
 
-    <!--    SWITCH-->
+    <!--SWITCH-->
     <string name="sw_terms">I accept the privacy statement policy and terms and conditions of use of the site.</string>
 
     <string name="title_activity_pantalla_principal">ScreenPrincipal</string>
@@ -46,6 +59,5 @@
     <string name="menu_product">Products</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_gallery">Gallery</string>
-
 
 </resources>

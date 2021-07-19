@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivityRegister"
+    tools:context=".MainActivityProduct"
     android:orientation="vertical">
 
     <LinearLayout
@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="15dp"
-            android:text="@string/txt_title_register"
+            android:text="@string/txt_title_add_product"
             android:textColor="@color/black"
             android:textSize="25sp" />
 
@@ -34,36 +34,36 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txt_names"
+            android:text="@string/txt_name_product"
             android:textColor="@color/black"
             android:textSize="20sp"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/et_names"
-            android:id="@+id/et_names"
-            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"/>
+            android:hint="@string/et_name_product"
+            android:id="@+id/et_name" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txt_surnames"
+            android:text="@string/txt_description"
             android:textColor="@color/black"
             android:layout_marginTop="15dp"
             android:textSize="20sp"/>
 
         <EditText
-            android:id="@+id/et_surnames"
+            android:id="@+id/et_description"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-            android:hint="@string/et_surnames" />
+            android:layout_height="80dp"
+            android:gravity="top"
+            android:hint="@string/et_description"
+            android:inputType="textMultiLine" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txt_email"
+            android:text="@string/txt_image"
             android:textColor="@color/black"
             android:layout_marginTop="15dp"
             android:textSize="20sp" />
@@ -71,14 +71,13 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/et_email"
-            android:id="@+id/et_email"
-            android:inputType="textEmailAddress"/>
+            android:hint="@string/et_image"
+            android:id="@+id/et_email"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txt_password"
+            android:text="@string/txt_price"
             android:textColor="@color/black"
             android:layout_marginTop="15dp"
             android:textSize="20sp"/>
@@ -86,41 +85,17 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/et_password"
+            android:hint="@string/et_price"
             android:id="@+id/et_password"
-            android:inputType="textPassword"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_phonenumber"
-            android:textColor="@color/black"
-            android:layout_marginTop="15dp"
-            android:textSize="20sp"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/et_phonenumber"
-            android:id="@+id/et_phonenumber"
-            android:inputType="phone"/>
-
-        <CheckBox
-            android:layout_marginTop="25dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sw_terms"
-            android:onClick="accept"
-            android:id="@+id/cb_term"/>
+            android:inputType="numberDecimal"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="@string/btn_register"
-            android:onClick="register"
-            android:id="@+id/btn_register"
-            android:enabled="false"/>
+            android:onClick="save"
+            android:id="@+id/btn_save"/>
 
     </LinearLayout>
 
