@@ -24,7 +24,4 @@ public interface UserDao {
 
     @Delete
     void deleteUser(User user);
-
-    @Delete
-    void deleteUsers(User... user);
 }

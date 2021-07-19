@@ -22,11 +22,20 @@ public class Product {
     }
 
     @Ignore
+    public Product(long id){
+        this.id = id;
+    }
+
+    @Ignore
     public Product(){
     }
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
