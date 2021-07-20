@@ -1,5 +1,6 @@
 package com.caoc.marketplace;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.AsyncTask;
@@ -46,9 +47,22 @@ public class MainActivityProduct extends AppCompatActivity {
         String image = et_imageURL.getText().toString();
         String price = et_price.getText().toString();
 
-        product = new Product(name,description,image,price);
+        if(!name.equals("") && !description.equals("")
+                && !image.equals("") && !price.equals("")){
+            product = new Product(name,description,image,price);
 
-        new GetUserTask(this).execute();
+            new GetUserTask(this).execute();
+        }else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.txt_title_add_product);
+
+            builder.setMessage(R.string.txt_msg_fail_empty);
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+
+
 
     }
 

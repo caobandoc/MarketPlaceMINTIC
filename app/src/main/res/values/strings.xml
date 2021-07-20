@@ -10,6 +10,7 @@
     <string name="btn_register">REGISTER</string>
     <string name="btn_accept">Accept</string>
     <string name="btn_cancel">Cancel</string>
+    <string name="btn_add_product">Add Product</string>
 
     <!--EDITTEXTS-->
     <string name="et_username">Username</string>
@@ -43,9 +44,15 @@
     <string name="txt_description">Description</string>
     <string name="txt_image">Image URL</string>
     <string name="txt_price">Price</string>
+    <string name="txt_msg_add_product">Product added successfully</string>
+    <string name="txt_msg_fail_empty">One or more fields are empty</string>
+    <string name="txt_msg_add_product_fail">Product could not be saved</string>
 
     <!--SWITCH-->
     <string name="sw_terms">I accept the privacy statement policy and terms and conditions of use of the site.</string>
+
+    <!--MENU-->
+    <string name="action_add_product">Add Product</string>
 
     <string name="title_activity_pantalla_principal">ScreenPrincipal</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -59,8 +66,7 @@
     <string name="menu_product">Products</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_gallery">Gallery</string>
-    <string name="txt_msg_add_product">Product added successfully</string>
-    <string name="txt_msg_add_product_fail">Save failed</string>
-    <string name="action_add_product">Add Product</string>
+
+
 
 </resources>
