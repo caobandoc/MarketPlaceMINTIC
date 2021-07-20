@@ -50,4 +50,7 @@
     <string name="et_image">https://www.imagen.com</string>
     <string name="txt_price">Precio</string>
     <string name="et_price">500000</string>
+    <string name="txt_msg_add_product">Se agregó el producto exitosamente</string>
+    <string name="txt_msg_add_product_fail">Error al guardar</string>
+    <string name="action_add_product">Agregar Producto</string>
 </resources>

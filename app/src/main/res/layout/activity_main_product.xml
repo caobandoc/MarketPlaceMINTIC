@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/et_image"
-            android:id="@+id/et_email"/>
+            android:id="@+id/et_image_url"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -86,7 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/et_price"
-            android:id="@+id/et_password"
+            android:id="@+id/et_price"
             android:inputType="numberDecimal"/>
 
         <Button
@@ -95,7 +95,7 @@
             android:layout_marginTop="15dp"
             android:text="@string/btn_register"
             android:onClick="save"
-            android:id="@+id/btn_save"/>
+            android:id="@+id/btn_save_p"/>
 
     </LinearLayout>
 

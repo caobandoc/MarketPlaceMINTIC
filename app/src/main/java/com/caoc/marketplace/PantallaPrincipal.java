@@ -1,6 +1,8 @@
 package com.caoc.marketplace;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
@@ -57,9 +59,23 @@ public class PantallaPrincipal extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem){
+        int id = menuItem.getItemId();
+
+        if(id == R.id.add_product){
+            Intent register = new Intent(this, MainActivityProduct.class);
+            startActivity(register);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(menuItem);
+    }
+
+    @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_pantalla_principal);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
 }

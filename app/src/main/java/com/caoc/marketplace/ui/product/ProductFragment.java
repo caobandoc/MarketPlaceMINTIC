@@ -26,6 +26,7 @@ import org.json.JSONException;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.Locale;
 
 public class ProductFragment extends Fragment {
 
@@ -48,7 +49,7 @@ public class ProductFragment extends Fragment {
         binding = FragmentProductBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        //Root se toma como la activdad principal para el findViewById
+        //Root se toma como la actividad principal para el findViewById
         //getActivity() es el this
 
         myself = getActivity();
@@ -73,17 +74,7 @@ public class ProductFragment extends Fragment {
 
         rv_products = root.findViewById(R.id.reciclerViewProducts);
         rv_products.setLayoutManager(new LinearLayoutManager(getActivity()));
-        /*
-        try {
-            JSONArray json = new JSONArray(text);
-            mAdapter = new ProductAdapter(json, myself);
-            rv_products.setAdapter(mAdapter);
 
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        */
         return root;
     }
 
@@ -108,7 +99,6 @@ public class ProductFragment extends Fragment {
             activityWeakReference = new WeakReference<>(context);
         }
 
-
         @Override
         protected List<Product> doInBackground(Void... voids) {
 
@@ -118,7 +108,6 @@ public class ProductFragment extends Fragment {
             }else {
                 return null;
             }
-
         }
 
         @Override
@@ -158,9 +147,19 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
         String name = this.productModelList.get(position).getName();
         String description = this.productModelList.get(position).getDescription();
         String urlImage = this.productModelList.get(position).getImage();
+        String priceR = this.productModelList.get(position).getPrice();
+        String price = "$";
+        int cont = 0;
+        for(int i = 0; i<priceR.length();i++){
+            if(price.length()>1 && (priceR.length()-i)%3 == 0){
+                price = price + ".";
+            }
+            price = price + priceR.charAt(i);
+        }
+
         holder.name.setText(name);
         holder.description.setText(description);
-
+        holder.price.setText(price);
         Glide.with(myself).load(urlImage).into(holder.image);
 
     }
@@ -174,11 +173,13 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
         private TextView name;
         private TextView description;
         private ImageView image;
+        private TextView price;
         public ViewHolder(View v){
             super(v);
             name = (TextView) v.findViewById(R.id.row_titulo);
             description = v.findViewById(R.id.row_description);
             image = v.findViewById(R.id.row_image);
+            price = v.findViewById(R.id.row_price);
 
         }
     }
