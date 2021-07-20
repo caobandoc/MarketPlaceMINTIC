@@ -59,5 +59,8 @@
     <string name="menu_product">Products</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_gallery">Gallery</string>
+    <string name="txt_msg_add_product">Product added successfully</string>
+    <string name="txt_msg_add_product_fail">Save failed</string>
+    <string name="action_add_product">Add Product</string>
 
 </resources>
