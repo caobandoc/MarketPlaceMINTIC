@@ -58,7 +58,9 @@
     <string name="action_log_out">Cerrar sesión</string>
     <string name="btn_add_cart">Agregar al carro</string>
     <string name="txt_msg_empty">Completa los datos</string>
-    <string name="txt_msg_email_fail">El correo no se encuentra registrado</string>
+    <string name="txt_msg_email_empty">El correo no se encuentra registrado</string>
     <string name="txt_msg_db_fail">La base de datos no está funcionando</string>
     <string name="txt_msg_pass_fail">Contraseña incorrecta</string>
+    <string name="txt_msg_email_fail">Correo inválido</string>
+    <string name="txt_msg_pass_short">La contraseña debe tener minimo 6 caracteres</string>
 </resources>
