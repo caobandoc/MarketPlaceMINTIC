@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/add_product"
-        android:orderInCategory="100"
         android:title="@string/action_add_product"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_basket_plus"/>
+    <item
+        android:id="@+id/log_out"
+        android:title="@string/action_log_out"
+        android:icon="@drawable/ic_logout"/>
 </menu>

@@ -47,6 +47,10 @@
     <string name="txt_msg_add_product">Product added successfully</string>
     <string name="txt_msg_fail_empty">One or more fields are empty</string>
     <string name="txt_msg_add_product_fail">Product could not be saved</string>
+    <string name="txt_msg_empty">Fill in the data</string>
+    <string name="txt_msg_email_fail">The email is not registered</string>
+    <string name="txt_msg_db_fail">The database is not working</string>
+    <string name="txt_msg_pass_fail">Incorrect password</string>
 
     <!--SWITCH-->
     <string name="sw_terms">I accept the privacy statement policy and terms and conditions of use of the site.</string>
@@ -63,10 +67,11 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_product">Products</string>
+    <string name="menu_products">Products</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_gallery">Gallery</string>
-
+    <string name="action_log_out">Log out</string>
+    <string name="btn_add_cart">Add Cart</string>
 
 
 </resources>
