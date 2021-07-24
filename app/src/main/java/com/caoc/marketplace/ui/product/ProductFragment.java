@@ -3,6 +3,7 @@ package com.caoc.marketplace.ui.product;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +21,18 @@ import com.caoc.marketplace.R;
 import com.caoc.marketplace.database.Database;
 import com.caoc.marketplace.database.model.Product;
 import com.caoc.marketplace.databinding.FragmentProductBinding;
-
-import org.json.JSONArray;
-import org.json.JSONException;
+import com.caoc.marketplace.util.Constant;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class ProductFragment extends Fragment {
 
@@ -40,7 +46,9 @@ public class ProductFragment extends Fragment {
 
     private Database database;
 
-    private List<Product> products;
+    private ArrayList<Product> products;
+
+    private FirebaseFirestore db;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -55,21 +63,28 @@ public class ProductFragment extends Fragment {
         myself = getActivity();
 
         database = Database.getInstance(getActivity());
+        db = FirebaseFirestore.getInstance();
 
-        /*
-        Product prod1 = new Product("Tarjeta Grafica","Tarjeta encargada de generar las imagenes","https://images-na.ssl-images-amazon.com/images/I/81IGSLMN16L._AC_SL1500_.jpg","1370000");
-        Product prod2 = new Product("Procesador","El nucleo de una computadora","https://images-na.ssl-images-amazon.com/images/I/614Oc4WrCeL._AC_SL1500_.jpg", "900000");
-        Product prod3 = new Product("Ram","Memorias de acceso rapido","https://images-na.ssl-images-amazon.com/images/I/71-cxf0ku8L._AC_SL1200_.jpg","500000");
-        Product prod4 = new Product("Disipador","Viene con un ventilador para enfriar el procesador", "https://images-na.ssl-images-amazon.com/images/I/71ew8nPq9kL._AC_SL1200_.jpg","500000");
-        Product prod5 = new Product("Placa madre","Tarjeta donde se conectan todos los componentes de un computador","https://images-na.ssl-images-amazon.com/images/I/81TbXzYLzUL._AC_SL1500_.jpg","500000");
-        database.getProductDao().insertProduct(prod1);
-        database.getProductDao().insertProduct(prod2);
-        database.getProductDao().insertProduct(prod3);
-        database.getProductDao().insertProduct(prod4);
-        database.getProductDao().insertProduct(prod5);
-        */
+        //new GetProductTask(ProductFragment.this).execute();
+        db.collection(Constant.TABLE_PRODUCT)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            products = new ArrayList<Product>();
 
-        new GetProductTask(ProductFragment.this).execute();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("FIREBASE GET:", document.getId() + " => " + document.getData());
+                                Product prod = document.toObject(Product.class);
+                                products.add(prod);
+                            }
+                            loadProducts();
+                        } else {
+                            Log.d("ERROR FIREBASE:", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
 
 
         rv_products = root.findViewById(R.id.reciclerViewProducts);
@@ -91,7 +106,7 @@ public class ProductFragment extends Fragment {
 
     }
 
-    private static class GetProductTask extends AsyncTask<Void, Void, List<Product>>{
+    /*private static class GetProductTask extends AsyncTask<Void, Void, DocumentSnapshot>{
 
         private WeakReference<ProductFragment> activityWeakReference;
 
@@ -100,10 +115,23 @@ public class ProductFragment extends Fragment {
         }
 
         @Override
-        protected List<Product> doInBackground(Void... voids) {
+        protected DocumentSnapshot doInBackground(Void... voids) {
 
             if(activityWeakReference != null){
-                List<Product> products = activityWeakReference.get().database.getProductDao().getProduct();
+                activityWeakReference.get().db.collection(Constant.TABLE_PRODUCT)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d("FIREBASE GET:", document.getId() + " => " + document.getData());
+                                    }
+                                } else {
+                                    Log.d("ERROR FIREBASE:", "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
                 return products;
             }else {
                 return null;
@@ -113,12 +141,11 @@ public class ProductFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Product> products){
             if(products != null && products.size() > 0){
-                activityWeakReference.get().products = products;
-                activityWeakReference.get().loadProducts();
+
             }
             super.onPostExecute(products);
         }
-    }
+    }*/
 }
 
 class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{

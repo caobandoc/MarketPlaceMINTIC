@@ -1,5 +1,6 @@
 package com.caoc.marketplace;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +15,11 @@ import android.widget.Toast;
 
 import com.caoc.marketplace.database.Database;
 import com.caoc.marketplace.database.model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.lang.ref.WeakReference;
 import java.util.regex.Matcher;
@@ -36,6 +42,8 @@ public class MainActivityRegister extends AppCompatActivity {
     private User userDb = new User();
     private User userCreate;
 
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +59,24 @@ public class MainActivityRegister extends AppCompatActivity {
 
         cb_term = findViewById(R.id.cb_term);
 
+        mAuth = FirebaseAuth.getInstance();
+
+    }
+
+    public void createUserPassword(String email, String password){
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            new GetUserTask(MainActivityRegister.this).execute();
+                        } else {
+                            Toast.makeText(MainActivityRegister.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     public void register(View v){
@@ -65,7 +91,7 @@ public class MainActivityRegister extends AppCompatActivity {
         if(this.validate(names,surnames,email,password,phonenumber)) {
             userCreate = new User(names, surnames, email, password, phonenumber);
 
-            new GetUserTask(this).execute();
+            createUserPassword(email,password);
         }else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.txt_title_register);

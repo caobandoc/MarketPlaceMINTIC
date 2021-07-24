@@ -11,6 +11,7 @@
     <string name="btn_accept">Accept</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_add_product">Add Product</string>
+    <string name="btn_add_cart">Add Cart</string>
 
     <!--EDITTEXTS-->
     <string name="et_username">Username</string>
@@ -34,23 +35,25 @@
     <string name="txt_email">Email</string>
     <string name="txt_password">Password</string>
     <string name="txt_phonenumber">Phone Number</string>
-    <string name="txt_msg_register">Registered user</string>
-    <string name="txt_msg_error_register">Registered user fail</string>
-    <string name="txt_msg_fail">The data is incorrect</string>
-    <string name="txt_msg_fail_exist">There is already a registered user with that email</string>
     <string name="txt_error">ERROR</string>
     <string name="txt_title_add_product">Add Product</string>
     <string name="txt_name_product">Product Name</string>
     <string name="txt_description">Description</string>
     <string name="txt_image">Image URL</string>
     <string name="txt_price">Price</string>
+    <string name="txt_msg_register">Registered user</string>
+    <string name="txt_msg_error_register">Registered user fail</string>
+    <string name="txt_msg_fail">The data is incorrect</string>
+    <string name="txt_msg_fail_exist">There is already a registered user with that email</string>
     <string name="txt_msg_add_product">Product added successfully</string>
     <string name="txt_msg_fail_empty">One or more fields are empty</string>
     <string name="txt_msg_add_product_fail">Product could not be saved</string>
     <string name="txt_msg_empty">Fill in the data</string>
-    <string name="txt_msg_email_fail">The email is not registered</string>
+    <string name="txt_msg_email_empty">The email is not registered</string>
+    <string name="txt_msg_email_fail">Invalid email</string>
     <string name="txt_msg_db_fail">The database is not working</string>
     <string name="txt_msg_pass_fail">Incorrect password</string>
+    <string name="txt_msg_pass_short">The password must have a minimum of 6 characters</string>
 
     <!--SWITCH-->
     <string name="sw_terms">I accept the privacy statement policy and terms and conditions of use of the site.</string>
@@ -71,7 +74,5 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_gallery">Gallery</string>
     <string name="action_log_out">Log out</string>
-    <string name="btn_add_cart">Add Cart</string>
-
 
 </resources>
