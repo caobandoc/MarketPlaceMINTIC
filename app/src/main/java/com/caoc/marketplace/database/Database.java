@@ -15,9 +15,9 @@ import com.caoc.marketplace.util.Constant;
 public abstract class Database extends RoomDatabase {
 
     public abstract UserDao getUserDao();
-    private static Database userDB;
-
     public abstract ProductDao getProductDao();
+
+    private static Database userDB;
 
     public static Database getInstance(Context context){
         if(userDB == null){
@@ -30,10 +30,6 @@ public abstract class Database extends RoomDatabase {
         return Room.databaseBuilder(context,
                 Database.class,
                 Constant.DB_MASTER).allowMainThreadQueries().build();
-    }
-
-    public void cleanUp(){
-
     }
 
 }

@@ -22,11 +22,6 @@ public class Product {
     }
 
     @Ignore
-    public Product(long id){
-        this.id = id;
-    }
-
-    @Ignore
     public Product(){
     }
 

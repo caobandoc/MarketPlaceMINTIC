@@ -37,7 +37,7 @@
     <string name="menu_slideshow">Diapositivas</string>
     <string name="sw_terms">Acepto la política de declaración de privacidad y los términos y condiciones de uso del sitio.</string>
     <string name="txt_msg_fail">Los datos son incorrectos</string>
-    <string name="menu_product">Productos</string>
+    <string name="menu_products">Productos</string>
     <string name="txt_msg_error_register">Error al registrar usuario</string>
     <string name="txt_error">ERROR</string>
     <string name="txt_msg_fail_exist">Ya existe un usuario registrado con este correo</string>
@@ -55,4 +55,10 @@
     <string name="btn_add_product">Agregar Producto</string>
     <string name="txt_msg_fail_empty">Uno o más campos están vacíos</string>
     <string name="txt_msg_add_product_fail">No se pudo guardar el producto</string>
+    <string name="action_log_out">Cerrar sesión</string>
+    <string name="btn_add_cart">Agregar al carro</string>
+    <string name="txt_msg_empty">Completa los datos</string>
+    <string name="txt_msg_email_fail">El correo no se encuentra registrado</string>
+    <string name="txt_msg_db_fail">La base de datos no está funcionando</string>
+    <string name="txt_msg_pass_fail">Contraseña incorrecta</string>
 </resources>
