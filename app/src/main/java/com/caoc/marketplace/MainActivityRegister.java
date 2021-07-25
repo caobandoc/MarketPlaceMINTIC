@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -88,18 +89,10 @@ public class MainActivityRegister extends AppCompatActivity {
 
         database = Database.getInstance(this);
 
-        if(this.validate(names,surnames,email,password,phonenumber)) {
+        if(validate(names,surnames,email,password,phonenumber)) {
             userCreate = new User(names, surnames, email, password, phonenumber);
 
             createUserPassword(email,password);
-        }else{
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.txt_title_register);
-
-            builder.setMessage(R.string.txt_msg_fail);
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
         }
     }
 
@@ -136,37 +129,77 @@ public class MainActivityRegister extends AppCompatActivity {
     }
 
     public boolean validate(String names, String surnames, String email, String password, String phonenumber){
-        boolean test = false;
-        if(names != null && surnames != null && email != null && password != null && phonenumber != null
-                && soloLetras(names) && soloLetras(surnames) && validarCorreo(email) && soloNumeros(phonenumber)){
-            test = true;
+        //names
+        if(names.equals("")){
+            et_names.setError(getString(R.string.txt_msg_empty));
+            return false;
+        }else{
+            et_names.setError(null);
         }
-        return test;
+        if(!soloLetras(names)){
+            et_names.setError(getString(R.string.txt_msg_fail));
+            return false;
+        }else{
+            et_names.setError(null);
+        }
+
+        //surnames
+        if(surnames.equals("")){
+            et_surnames.setError(getString(R.string.txt_msg_empty));
+            return false;
+        }else{
+            et_surnames.setError(null);
+        }
+        if(!soloLetras(surnames)){
+            et_surnames.setError(getString(R.string.txt_msg_fail));
+            return false;
+        }else{
+            et_surnames.setError(null);
+        }
+
+        //Correo
+        if(email.equals("")){
+            et_email.setError(getString(R.string.txt_msg_empty));
+            return false;
+        }else{
+            et_email.setError(null);
+        }
+        if(Patterns.EMAIL_ADDRESS.matcher(email).matches() == false){
+            et_email.setError(getString(R.string.txt_msg_email_fail));
+            return false;
+        }else{
+            et_email.setError(null);
+        }
+
+        //password
+        if(password.equals("")){
+            et_password.setError(getString(R.string.txt_msg_empty));
+            return false;
+        }else{
+            et_password.setError(null);
+        }
+        if(password.length()>6){
+            et_password.setError(getString(R.string.txt_msg_pass_short));
+            return false;
+        }else{
+            et_password.setError(null);
+        }
+
+        //telefono
+        if(!phonenumber.equals("")){
+            if(Patterns.PHONE.matcher(phonenumber).matches()==false){
+                et_phonenumber.setError(getString(R.string.txt_msg_phone_error));
+            }else{
+                et_phonenumber.setError(null);
+            }
+        }
+        return true;
     }
 
     public boolean soloLetras(String s){
         for (int x = 0; x < s.length(); x++) {
             char c = s.charAt(x);
             if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == ' ')) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean validarCorreo(String s){
-        Pattern pattern = Pattern
-                .compile("([a-z0-9]+(\\.?[a-z0-9])*)+@(([a-z]+)\\.([a-z]+))+");
-
-        Matcher mather = pattern.matcher(s);
-
-        return mather.find();
-    }
-
-    public boolean soloNumeros(String s){
-        for (int x = 0; x < s.length(); x++) {
-            char c = s.charAt(x);
-            if (!(c >= '0' && c <= '9')) {
                 return false;
             }
         }
