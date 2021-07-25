@@ -63,4 +63,7 @@
     <string name="txt_msg_pass_fail">Contraseña incorrecta</string>
     <string name="txt_msg_email_fail">Correo inválido</string>
     <string name="txt_msg_pass_short">La contraseña debe tener minimo 6 caracteres</string>
+    <string name="txt_msg_phone_error">El teléfono es incorrecto</string>
+    <string name="txt_msg_url_fail">La URL es incorrecta</string>
+    <string name="txt_msg_login_success">Ingreso exitoso</string>
 </resources>

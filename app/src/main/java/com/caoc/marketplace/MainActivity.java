@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             //reload();
@@ -56,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
         et_password = findViewById(R.id.et_password);
         btn_login = findViewById(R.id.btn_login);
         btn_register = findViewById(R.id.btn_login);
-
-        //db = FirebaseFirestore.getInstance();
 
         preferences = getSharedPreferences(Constant.PREFERENCES, MODE_PRIVATE);
 
@@ -121,8 +118,10 @@ public class MainActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     loginAccept(email, password);
+                                    Toast.makeText(MainActivity.this, R.string.txt_msg_login_success,
+                                            Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(MainActivity.this, R.string.txt_msg_pass_fail,
+                                    Toast.makeText(MainActivity.this, R.string.txt_msg_fail,
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -135,10 +134,7 @@ public class MainActivity extends AppCompatActivity {
         if(email.equals("")){
             et_email.setError(getString(R.string.txt_msg_empty));
             return false;
-        }else{
-            et_email.setError(null);
-        }
-        if(Patterns.EMAIL_ADDRESS.matcher(email).matches()==false){
+        }else if(Patterns.EMAIL_ADDRESS.matcher(email).matches()==false){
             et_email.setError(getString(R.string.txt_msg_email_fail));
             return false;
         }else{
@@ -149,10 +145,7 @@ public class MainActivity extends AppCompatActivity {
         if(password.equals("")){
             et_password.setError(getString(R.string.txt_msg_empty));
             return false;
-        }else{
-            et_password.setError(null);
-        }
-        if(password.length()<6){
+        }else if(password.length()<6){
             et_password.setError(getString(R.string.txt_msg_pass_short));
             return false;
         }else{

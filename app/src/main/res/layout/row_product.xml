@@ -5,47 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_margin="5dp">
-<!--
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="25"
-        android:layout_margin="10dp">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/row_image"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="70"
-        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/row_titulo"
-            android:textSize="35dp"
-            android:text="Nombre"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/row_description"
-            android:textSize="20dp"
-            android:text="descripcion"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/row_price"
-            android:textSize="20dp"
-            android:text="price"/>
-
-    </LinearLayout>
-    
--->
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card"

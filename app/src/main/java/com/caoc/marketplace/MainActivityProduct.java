@@ -1,19 +1,21 @@
 package com.caoc.marketplace;
 
-import androidx.appcompat.app.AlertDialog;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.caoc.marketplace.database.Database;
 import com.caoc.marketplace.database.model.Product;
-
-import java.lang.ref.WeakReference;
+import com.caoc.marketplace.util.Constant;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivityProduct extends AppCompatActivity {
 
@@ -23,9 +25,9 @@ public class MainActivityProduct extends AppCompatActivity {
     private EditText et_price;
     private Button btn_save;
 
-    private Database database;
-
     private Product product;
+    private FirebaseFirestore db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class MainActivityProduct extends AppCompatActivity {
         et_price = findViewById(R.id.et_price);
         btn_save = findViewById(R.id.btn_save_p);
 
-        database = Database.getInstance(this);
+        db = FirebaseFirestore.getInstance();
     }
 
     public void save(View v){
@@ -47,53 +49,61 @@ public class MainActivityProduct extends AppCompatActivity {
         String image = et_imageURL.getText().toString();
         String price = et_price.getText().toString();
 
-        if(!name.equals("") && !description.equals("")
-                && !image.equals("") && !price.equals("")){
+        if(validateInput(name,description,image,price)){
             product = new Product(name,description,image,price);
 
-            new GetUserTask(this).execute();
-        }else{
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.txt_title_add_product);
+            db.collection(Constant.TABLE_PRODUCT)
+                    .add(product)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            saveOk();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            saveError();
+                        }
+                    });
 
-            builder.setMessage(R.string.txt_msg_fail_empty);
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
         }
-
-
 
     }
 
-    private static class GetUserTask extends AsyncTask<Void, Void, Product> {
-
-        private WeakReference<MainActivityProduct> activityWeakReference;
-
-        GetUserTask(MainActivityProduct context){
-            activityWeakReference = new WeakReference<>(context);
+    public boolean validateInput(String name, String description, String image, String price){
+        if(name.equals("")){
+            et_name.setError(getString(R.string.txt_msg_empty));
+            return false;
+        }else{
+            et_name.setError(null);
         }
 
-        @Override
-        protected Product doInBackground(Void... voids) {
-            if(activityWeakReference != null){
-                long res = activityWeakReference.get().database.getProductDao().insertProduct(activityWeakReference.get().product);
-                activityWeakReference.get().product.setId(res);
-                return activityWeakReference.get().product;
-            }else {
-                return null;
-            }
+        if(description.equals("")){
+            et_description.setError(getString(R.string.txt_msg_empty));
+            return false;
+        }else{
+            et_description.setError(null);
         }
 
-        @Override
-        protected void onPostExecute(Product product){
-            if(product.getId() == 0){
-                activityWeakReference.get().saveError();
-            }else{
-                activityWeakReference.get().saveOk();
-            }
-            super.onPostExecute(product);
+        if(image.equals("")){
+            et_imageURL.setError(getString(R.string.txt_msg_empty));
+            return false;
+        }else if(Patterns.WEB_URL.matcher(image).matches()==false){
+            et_imageURL.setError(getString(R.string.txt_msg_url_fail));
+            return false;
+        }else{
+            et_imageURL.setError(null);
         }
+
+        if(image.equals("")){
+            et_price.setError(getString(R.string.txt_msg_empty));
+            return false;
+        }else{
+            et_price.setError(null);
+        }
+
+        return true;
     }
 
     private void saveOk() {

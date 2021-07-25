@@ -54,6 +54,9 @@
     <string name="txt_msg_db_fail">The database is not working</string>
     <string name="txt_msg_pass_fail">Incorrect password</string>
     <string name="txt_msg_pass_short">The password must have a minimum of 6 characters</string>
+    <string name="txt_msg_phone_error">The phone is wrong</string>
+    <string name="txt_msg_url_fail">The URL is wrong</string>
+    <string name="txt_msg_login_success">Login success</string>
 
     <!--SWITCH-->
     <string name="sw_terms">I accept the privacy statement policy and terms and conditions of use of the site.</string>
@@ -74,5 +77,6 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_gallery">Gallery</string>
     <string name="action_log_out">Log out</string>
+
 
 </resources>
