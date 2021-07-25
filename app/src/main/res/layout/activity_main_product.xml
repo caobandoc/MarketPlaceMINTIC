@@ -21,7 +21,6 @@
             android:text="@string/txt_title_add_product"
             android:textColor="@color/black"
             android:textSize="25sp" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -31,63 +30,60 @@
         android:layout_marginHorizontal="16dp"
         android:gravity="center_vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_name_product"
-            android:textColor="@color/black"
-            android:textSize="20sp"/>
-
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/et_name_product"
-            android:id="@+id/et_name" />
+            android:textSize="20sp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_description"
-            android:textColor="@color/black"
-            android:layout_marginTop="15dp"
-            android:textSize="20sp"/>
-
-        <EditText
-            android:id="@+id/et_description"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:gravity="top"
+            android:layout_height="wrap_content"
             android:hint="@string/et_description"
-            android:inputType="textMultiLine" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_image"
-            android:textColor="@color/black"
+            android:textSize="20sp"
             android:layout_marginTop="15dp"
-            android:textSize="20sp" />
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_description"
+                android:gravity="top"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/et_image"
-            android:id="@+id/et_image_url"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_price"
-            android:textColor="@color/black"
+            android:hint="@string/txt_image"
+            android:textSize="20sp"
             android:layout_marginTop="15dp"
-            android:textSize="20sp"/>
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_image_url" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/et_price"
-            android:id="@+id/et_price"
-            android:inputType="numberDecimal"/>
+            android:hint="@string/txt_price"
+            android:textSize="20sp"
+            android:layout_marginTop="15dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_price"
+                android:inputType="numberDecimal"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:layout_width="match_parent"
@@ -96,7 +92,6 @@
             android:text="@string/btn_add_product"
             android:onClick="save"
             android:id="@+id/btn_save_p"/>
-
     </LinearLayout>
 
 </LinearLayout>
