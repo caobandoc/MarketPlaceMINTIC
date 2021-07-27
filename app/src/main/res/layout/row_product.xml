@@ -6,6 +6,13 @@
     android:orientation="horizontal"
     android:layout_margin="5dp">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/row_key"
+        android:visibility="gone"
+        />
+
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card"
@@ -73,11 +80,18 @@
                 android:layout_margin="8dp"
                 android:orientation="horizontal">
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_add_cart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:text="@string/btn_add_cart"
-                    android:onClick="addCart"
+                    />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_show_prod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/btn_show_prod"
                     />
             </LinearLayout>
 

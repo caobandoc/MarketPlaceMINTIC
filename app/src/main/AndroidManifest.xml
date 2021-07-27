@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Marketplace">
-        <activity android:name=".MainActivityCart"></activity>
+        <activity android:name=".ActivityProduct"></activity>
+        <activity android:name=".MainActivityCart" />
         <activity android:name=".MainActivityProduct" />
         <activity android:name=".MainActivityRegister" />
         <activity
