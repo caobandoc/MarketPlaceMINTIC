@@ -8,10 +8,14 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.Toast;
 
+import com.caoc.marketplace.database.model.User;
 import com.caoc.marketplace.util.Constant;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -20,6 +24,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.caoc.marketplace.databinding.ActivityPantallaPrincipalBinding;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class PantallaPrincipal extends AppCompatActivity {
 
@@ -27,9 +34,30 @@ public class PantallaPrincipal extends AppCompatActivity {
     private ActivityPantallaPrincipalBinding binding;
     private SharedPreferences preferences;
 
+    private FirebaseFirestore db;
+    private User userLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        db = FirebaseFirestore.getInstance();
+
+        preferences = getSharedPreferences(Constant.PREFERENCES, MODE_PRIVATE);
+        String email = preferences.getString("email", null);
+
+        DocumentReference docRef = db.collection(Constant.TABLE_USER).document(email);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        userLogin = document.toObject(User.class);
+                    }
+                }
+            }
+        });
 
         binding = ActivityPantallaPrincipalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -53,8 +81,6 @@ public class PantallaPrincipal extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_pantalla_principal);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
-        preferences = getSharedPreferences(Constant.PREFERENCES, MODE_PRIVATE);
 
     }
 

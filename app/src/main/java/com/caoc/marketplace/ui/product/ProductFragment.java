@@ -76,7 +76,7 @@ public class ProductFragment extends Fragment {
                     }
                 });
 
-        rv_products = root.findViewById(R.id.reciclerViewProducts);
+        rv_products = root.findViewById(R.id.rv_products);
         rv_products.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return root;

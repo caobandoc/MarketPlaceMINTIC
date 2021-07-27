@@ -2,7 +2,10 @@ package com.caoc.marketplace;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -107,8 +110,14 @@ public class MainActivityProduct extends AppCompatActivity {
     }
 
     private void saveOk() {
-        Toast.makeText(this, R.string.txt_msg_add_product, Toast.LENGTH_SHORT).show();
+        Fragment frg = null;
+        frg = getSupportFragmentManager().findFragmentByTag("Your_Fragment_TAG");
+        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.detach(frg);
+        ft.attach(frg);
+        ft.commit();
 
+        Toast.makeText(this, R.string.txt_msg_add_product, Toast.LENGTH_SHORT).show();
         finish();
     }
 
