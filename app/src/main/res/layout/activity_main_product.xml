@@ -13,7 +13,6 @@
         android:orientation="horizontal"
         android:layout_margin="10dp"
         android:gravity="center">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,13 +27,16 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginHorizontal="16dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:background="@drawable/ic_background_shopping">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/et_name_product"
             android:textSize="20sp"
+            app:startIconDrawable="@drawable/ic_product_format_title"
+            android:background="@color/white"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_name"
@@ -49,6 +51,8 @@
             android:hint="@string/et_description"
             android:textSize="20sp"
             android:layout_marginTop="15dp"
+            android:background="@color/white"
+            app:startIconDrawable="@drawable/ic_product_tooltip_text"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_description"
@@ -64,6 +68,8 @@
             android:hint="@string/txt_image"
             android:textSize="20sp"
             android:layout_marginTop="15dp"
+            android:background="@color/white"
+            app:startIconDrawable="@drawable/ic_product_image"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -77,6 +83,8 @@
             android:hint="@string/txt_price"
             android:textSize="20sp"
             android:layout_marginTop="15dp"
+            android:background="@color/white"
+            app:startIconDrawable="@drawable/ic_product_usd"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
