@@ -1,13 +1,17 @@
 package com.caoc.marketplace.ui.product;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -16,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.caoc.marketplace.ActivityProduct;
 import com.caoc.marketplace.R;
 import com.caoc.marketplace.database.model.Product;
 import com.caoc.marketplace.databinding.FragmentProductBinding;
@@ -67,6 +72,7 @@ public class ProductFragment extends Fragment {
                             products = new ArrayList<Product>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Product prod = document.toObject(Product.class);
+                                prod.setKey(document.getId());
                                 products.add(prod);
                             }
                             loadProducts();
@@ -89,8 +95,8 @@ public class ProductFragment extends Fragment {
     }
 
     private void loadProducts(){
-
         mAdapter = new ProductAdapter(products, myself);
+
         rv_products.setAdapter(mAdapter);
 
     }
@@ -116,6 +122,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(ProductAdapter.ViewHolder holder, int position) {
+        String key = this.productModelList.get(position).getKey();
         String name = this.productModelList.get(position).getName();
         String description = this.productModelList.get(position).getDescription();
         String urlImage = this.productModelList.get(position).getImage();
@@ -128,30 +135,67 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
             price = price + priceR.charAt(i);
         }
 
+        holder.key.setText(key);
         holder.name.setText(name);
         holder.description.setText(description);
         holder.price.setText(price);
         Glide.with(myself).load(urlImage).into(holder.image);
 
+        holder.setOnClickListeners();
+
     }
+
 
     @Override
     public int getItemCount(){
         return productModelList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView name;
         private TextView description;
         private ImageView image;
         private TextView price;
+        private TextView key;
+
+        private Button btn_addProd;
+        private Button btn_showProd;
+
+        private Context context;
+
         public ViewHolder(View v){
             super(v);
+            context = v.getContext();
+
+            key = v.findViewById(R.id.row_key);
             name = v.findViewById(R.id.row_titulo);
             description = v.findViewById(R.id.row_description);
             image = v.findViewById(R.id.row_image);
             price = v.findViewById(R.id.row_price);
 
+            btn_addProd = v.findViewById(R.id.btn_add_cart);
+            btn_showProd = v.findViewById(R.id.btn_show_prod);
+
+        }
+
+        public void setOnClickListeners(){
+            btn_addProd.setOnClickListener(this);
+            btn_showProd.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.btn_add_cart:
+                    Toast.makeText(context, "Agregado con exito", Toast.LENGTH_SHORT).show();
+                    break;
+
+                case R.id.btn_show_prod:
+                    Intent showProd = new Intent(context, ActivityProduct.class);
+                    showProd.putExtra("key", key.getText().toString());
+                    context.startActivity(showProd);
+                    break;
+            }
         }
     }
 }

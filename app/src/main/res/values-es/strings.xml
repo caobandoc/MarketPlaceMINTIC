@@ -66,4 +66,5 @@
     <string name="txt_msg_phone_error">El teléfono es incorrecto</string>
     <string name="txt_msg_url_fail">La URL es incorrecta</string>
     <string name="txt_msg_login_success">Ingreso exitoso</string>
+    <string name="btn_show_prod">Ver</string>
 </resources>

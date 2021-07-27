@@ -93,25 +93,23 @@ public class PantallaPrincipal extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem){
-        int id = menuItem.getItemId();
 
-        if(id == R.id.add_product){
-            Intent register = new Intent(this, MainActivityProduct.class);
-            startActivity(register);
-            return true;
-        }
+        switch (menuItem.getItemId()){
+            case R.id.add_product:
+                Intent register = new Intent(this, MainActivityProduct.class);
+                startActivity(register);
+                break;
+            case R.id.log_out:
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.clear();
+                editor.commit();
 
-        if(id == R.id.log_out){
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.clear();
-            editor.commit();
+                finish();
 
-            finish();
+                Intent logIn = new Intent(this, MainActivity.class);
+                startActivity(logIn);
 
-            Intent logIn = new Intent(this, MainActivity.class);
-            startActivity(logIn);
-
-            return true;
+                break;
         }
 
         return super.onOptionsItemSelected(menuItem);
@@ -123,9 +121,15 @@ public class PantallaPrincipal extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
+/*
     public void addCart(View v){
         Toast.makeText(this, "Agregado con exito", Toast.LENGTH_SHORT).show();
     }
 
+    public void showProd(View v){
+        Intent showProd = new Intent(this, ActivityProduct.class);
+        showProd.putExtra("key", );
+        startActivity(showProd);
+    }
+*/
 }

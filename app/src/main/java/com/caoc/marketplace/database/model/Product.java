@@ -13,6 +13,7 @@ public class Product {
     private String description;
     private String image;
     private String price;
+    private String key;
 
     public Product(String name, String description, String image, String price) {
         this.name = name;
@@ -63,5 +64,13 @@ public class Product {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }
