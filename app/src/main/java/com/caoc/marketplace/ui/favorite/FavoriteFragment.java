@@ -1,4 +1,4 @@
-package com.caoc.marketplace.ui.product;
+package com.caoc.marketplace.ui.favorite;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,7 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,7 +26,7 @@ import com.bumptech.glide.Glide;
 import com.caoc.marketplace.ActivityProduct;
 import com.caoc.marketplace.R;
 import com.caoc.marketplace.database.model.Product;
-import com.caoc.marketplace.databinding.FragmentProductBinding;
+import com.caoc.marketplace.databinding.FragmentFavoriteBinding;
 import com.caoc.marketplace.util.Constant;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,10 +41,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductFragment extends Fragment {
+public class FavoriteFragment extends Fragment {
 
-    private ProductViewModel productViewModel;
-    private FragmentProductBinding binding;
+    private FavoriteViewModel slideshowViewModel;
+    private FragmentFavoriteBinding binding;
 
     private RecyclerView rv_products;
     private RecyclerView.Adapter mAdapter;
@@ -53,21 +55,38 @@ public class ProductFragment extends Fragment {
 
     private FirebaseFirestore db;
 
+    private SharedPreferences preferences;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
+        slideshowViewModel = new ViewModelProvider(this).get(FavoriteViewModel.class);
 
-        binding = FragmentProductBinding.inflate(inflater, container, false);
+        binding = FragmentFavoriteBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         myself = getActivity();
 
-        //Root se toma como la actividad principal para el findViewById
-        //getActivity() es el this
-
         db = FirebaseFirestore.getInstance();
 
-        //new GetProductTask(ProductFragment.this).execute();
+        preferences = myself.getSharedPreferences(Constant.PREFERENCES, myself.MODE_PRIVATE);
+
+        String fav = preferences.getString(Constant.ADD_FAV, "[]");
+        JSONArray favJson;
+        try {
+            favJson = new JSONArray(fav);
+            for (int i = 0; i < favJson.length(); i++) {
+                JSONObject object = favJson.getJSONObject(i);
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
+        //Crear array de keys productos
+
         db.collection(Constant.TABLE_PRODUCT)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -87,6 +106,7 @@ public class ProductFragment extends Fragment {
                     }
                 });
 
+
         rv_products = root.findViewById(R.id.rv_products);
         rv_products.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -101,11 +121,9 @@ public class ProductFragment extends Fragment {
 
     private void loadProducts(){
         mAdapter = new ProductAdapter(products, myself);
-
         rv_products.setAdapter(mAdapter);
 
     }
-
 }
 
 class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
@@ -119,14 +137,15 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ProductAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_product , parent, false);
-        ViewHolder viewHolder = new ViewHolder(v);
+        ProductAdapter.ViewHolder viewHolder = new ProductAdapter.ViewHolder(v);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ProductAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         String key = this.productModelList.get(position).getKey();
         String name = this.productModelList.get(position).getName();
         String description = this.productModelList.get(position).getDescription();
@@ -162,9 +181,8 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
         private TextView price;
         private TextView key;
 
-        private Button btn_addProd;
-        private Button btn_addFav;
-        private Button btn_showProd;
+        private Button btn_show_prod;
+        private Button btn_del;
 
         private Context context;
 
@@ -180,35 +198,29 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
             image = v.findViewById(R.id.row_image);
             price = v.findViewById(R.id.row_price);
 
-            btn_addProd = v.findViewById(R.id.btn_add_cart);
-            btn_addFav = v.findViewById(R.id.btn_fav_prod);
-            btn_showProd = v.findViewById(R.id.btn_show_prod);
+            btn_del = v.findViewById(R.id.btn_del);
+            btn_show_prod = v.findViewById(R.id.btn_show_prod);
 
             shared = context.getSharedPreferences(Constant.PREFERENCES, context.MODE_PRIVATE);
 
         }
 
         public void setOnClickListeners(){
-            btn_addProd.setOnClickListener(this);
-            btn_addFav.setOnClickListener(this);
-            btn_showProd.setOnClickListener(this);
+            btn_del.setOnClickListener(this);
+            btn_show_prod.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                case R.id.btn_add_cart:
-                    addCar();
+                case R.id.btn_del:
+                    delFav();
                     break;
 
                 case R.id.btn_show_prod:
                     Intent showProd = new Intent(context, ActivityProduct.class);
                     showProd.putExtra("key", key.getText().toString());
                     context.startActivity(showProd);
-                    break;
-
-                case R.id.btn_fav_prod:
-                    addFav();
                     break;
             }
         }
@@ -223,35 +235,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
             return false;
         }
 
-        private void addFav(){
-            try {
-                //Obtener datos guardados
-                String market = shared.getString(Constant.ADD_FAV, "[]");
-                JSONArray jMarket = new JSONArray(market);
-
-                if(existObject(jMarket)){
-                    Toast.makeText(context, R.string.txt_msg_prod_add_exist, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                //Producto a guardar en el json
-                JSONObject product = new JSONObject();
-                product.put("user", shared.getString("email", null));
-                product.put("key", key.getText().toString());
-
-                jMarket.put(product);
-
-                SharedPreferences.Editor editor = shared.edit();
-                editor.putString(Constant.ADD_FAV, jMarket.toString());
-                editor.commit();
-
-                Toast.makeText(context, R.string.txt_msg_prod_add, Toast.LENGTH_SHORT).show();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        private void addCar(){
+        private void delFav(){
             try {
                 //Obtener datos guardados
                 String market = shared.getString(Constant.ADD_CART, "[]");
@@ -262,7 +246,8 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
                     return;
                 }
 
-                //Producto a guardar en el json
+                //Producto a eliminar en el json
+                /*
                 JSONObject product = new JSONObject();
                 product.put("user", shared.getString("email", null));
                 product.put("key", key.getText().toString());
@@ -273,7 +258,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
                 SharedPreferences.Editor editor = shared.edit();
                 editor.putString(Constant.ADD_CART, jMarket.toString());
                 editor.commit();
-
+                */
                 Toast.makeText(context, R.string.txt_msg_prod_add, Toast.LENGTH_SHORT).show();
             } catch (JSONException e) {
                 e.printStackTrace();

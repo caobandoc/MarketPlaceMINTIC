@@ -11,7 +11,11 @@
     <string name="btn_accept">Accept</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_add_product">Add Product</string>
+    <string name="btn_show_prod">Show</string>
     <string name="btn_add_cart">Add Cart</string>
+    <string name="btn_del_cart">Remove Cart</string>
+    <string name="btn_fav_product">Favorite</string>
+    <string name="btn_fav_product_del">Remove Favorite</string>
 
     <!--EDITTEXTS-->
     <string name="et_username">Username</string>
@@ -57,12 +61,18 @@
     <string name="txt_msg_phone_error">The phone is wrong</string>
     <string name="txt_msg_url_fail">The URL is wrong</string>
     <string name="txt_msg_login_success">Login success</string>
+    <string name="txt_msg_prod_add_exist">The product is already added</string>
+    <string name="txt_msg_prod_add">Product added</string>
 
     <!--SWITCH-->
     <string name="sw_terms">I accept the privacy statement policy and terms and conditions of use of the site.</string>
 
     <!--MENU-->
     <string name="action_add_product">Add Product</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_products">Products</string>
+    <string name="menu_favorite">Favorites</string>
+    <string name="menu_cart">Shopping Cart</string>
 
     <string name="title_activity_pantalla_principal">ScreenPrincipal</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -72,12 +82,8 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_products">Products</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_gallery">Gallery</string>
     <string name="action_log_out">Log out</string>
-    <string name="btn_show_prod">Show</string>
+
 
 
 </resources>
