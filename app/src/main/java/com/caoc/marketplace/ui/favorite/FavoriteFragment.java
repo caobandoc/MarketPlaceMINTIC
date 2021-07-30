@@ -52,6 +52,7 @@ public class FavoriteFragment extends Fragment {
     private Activity myself;
 
     private ArrayList<Product> products;
+    private ArrayList<String> keys;
 
     private FirebaseFirestore db;
 
@@ -69,45 +70,51 @@ public class FavoriteFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
 
         preferences = myself.getSharedPreferences(Constant.PREFERENCES, myself.MODE_PRIVATE);
+        String email = preferences.getString("email", null);
 
-        String fav = preferences.getString(Constant.ADD_FAV, "[]");
-        JSONArray favJson;
-        try {
-            favJson = new JSONArray(fav);
-            for (int i = 0; i < favJson.length(); i++) {
-                JSONObject object = favJson.getJSONObject(i);
-
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if(email == null){
+            Toast.makeText(myself, "ERROR AL INGRESAR EL LOGIN", Toast.LENGTH_SHORT).show();
+            return root;
         }
 
+        String fav = preferences.getString(Constant.ADD_FAV, "[]");
 
+        if(fav.equals("[]")){
+            Toast.makeText(myself, "NO TIENE FAVORITOS AGREGADOS", Toast.LENGTH_SHORT).show();
+            return root;
+        }
 
-        //Crear array de keys productos
+        try {
+            JSONArray favJson = new JSONArray(fav);
+            for (int i = 0; i < favJson.length(); i++) {
+                JSONObject object = favJson.getJSONObject(i);
+                if(object.getString("user").equals(email)){
+                    keys.add(object.getString("key"));
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(myself, "ERROR EN EL JSON", Toast.LENGTH_SHORT).show();
+        }
 
         db.collection(Constant.TABLE_PRODUCT)
+                .whereEqualTo("capital", true)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            products = new ArrayList<Product>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Product prod = document.toObject(Product.class);
-                                prod.setKey(document.getId());
-                                products.add(prod);
+                                Log.d("CORRECTO", document.getId() + " => " + document.getData());
                             }
-                            loadProducts();
                         } else {
-                            Log.d("ERROR FIREBASE:", "Error getting documents: ", task.getException());
+                            Log.d("NO HAY DATOS", "Error getting documents: ", task.getException());
                         }
                     }
                 });
 
 
-        rv_products = root.findViewById(R.id.rv_products);
+        rv_products = root.findViewById(R.id.rv_favorite);
         rv_products.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return root;
