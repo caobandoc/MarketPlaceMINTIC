@@ -110,43 +110,43 @@ public class MainActivity extends AppCompatActivity {
         String password = et_password.getText().toString();
 
         if (validEt(email, password)) {
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    loginAccept(email, password);
-                                    Toast.makeText(MainActivity.this, R.string.txt_msg_login_success,
-                                            Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(MainActivity.this, R.string.txt_msg_fail,
-                                            Toast.LENGTH_SHORT).show();
-                                }
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                loginAccept(email, password);
+                                Toast.makeText(MainActivity.this, R.string.txt_msg_login_success,
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(MainActivity.this, R.string.txt_msg_fail,
+                                        Toast.LENGTH_SHORT).show();
                             }
-                        });
+                        }
+                    });
         }
     }
 
-    public boolean validEt(String email, String password){
+    public boolean validEt(String email, String password) {
         //Email
-        if(email.equals("")){
+        if (email.equals("")) {
             et_email.setError(getString(R.string.txt_msg_empty));
             return false;
-        }else if(Patterns.EMAIL_ADDRESS.matcher(email).matches()==false){
+        } else if (Patterns.EMAIL_ADDRESS.matcher(email).matches() == false) {
             et_email.setError(getString(R.string.txt_msg_email_fail));
             return false;
-        }else{
+        } else {
             et_email.setError(null);
         }
 
         //Password
-        if(password.equals("")){
+        if (password.equals("")) {
             et_password.setError(getString(R.string.txt_msg_empty));
             return false;
-        }else if(password.length()<6){
+        } else if (password.length() < 6) {
             et_password.setError(getString(R.string.txt_msg_pass_short));
             return false;
-        }else{
+        } else {
             et_password.setError(null);
         }
         return true;

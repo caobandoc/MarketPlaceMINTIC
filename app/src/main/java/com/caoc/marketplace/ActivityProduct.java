@@ -68,8 +68,8 @@ public class ActivityProduct extends AppCompatActivity implements OnMapReadyCall
                         description.setText(prod.getDescription());
                         String priceR = prod.getPrice();
                         String price = "$";
-                        for(int i = 0; i<priceR.length();i++){
-                            if(price.length()>1 && (priceR.length()-i)%3 == 0){
+                        for (int i = 0; i < priceR.length(); i++) {
+                            if (price.length() > 1 && (priceR.length() - i) % 3 == 0) {
                                 price = price + ".";
                             }
                             price = price + priceR.charAt(i);
@@ -104,7 +104,7 @@ public class ActivityProduct extends AppCompatActivity implements OnMapReadyCall
 
     }
 
-    public void getUser(String email){
+    public void getUser(String email) {
         DocumentReference docRef = db.collection(Constant.TABLE_USER).document(email);
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

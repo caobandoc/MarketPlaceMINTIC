@@ -94,8 +94,8 @@ public class MainActivityRegister extends AppCompatActivity {
         String email = et_email.getText().toString();
         String password = et_password.getText().toString();
         String phonenumber = et_phonenumber.getText().toString();
-        String latitude = String.valueOf(shared.getFloat("LAT",0));
-        String longitude = String.valueOf(shared.getFloat("LAM",0));
+        String latitude = String.valueOf(shared.getFloat("LAT", 0));
+        String longitude = String.valueOf(shared.getFloat("LON", 0));
 
         if (validate(names, surnames, email, password, phonenumber)) {
             userCreate = new User(names, surnames, email, phonenumber, latitude, longitude);
@@ -116,6 +116,12 @@ public class MainActivityRegister extends AppCompatActivity {
         });
 
         builder.setMessage(R.string.txt_msg_register);
+
+        SharedPreferences.Editor editor = shared.edit();
+        editor.putFloat("LAT", 0);
+        editor.putFloat("LON", 0);
+
+        editor.commit();
 
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -187,10 +193,10 @@ public class MainActivityRegister extends AppCompatActivity {
         }
 
         //gps
-        if(shared.getFloat("LAT",0) == 0 && shared.getFloat("LON",0) == 0){
+        if (shared.getFloat("LAT", 0) == 0 && shared.getFloat("LON", 0) == 0) {
             btn_gps.setError(getString(R.string.txt_msg_empty_gps));
             return false;
-        }else{
+        } else {
             btn_gps.setError(null);
         }
 
@@ -207,7 +213,7 @@ public class MainActivityRegister extends AppCompatActivity {
         return true;
     }
 
-    public void gps(View v){
+    public void gps(View v) {
         Intent gps = new Intent(this, MapsActivity.class);
         startActivity(gps);
     }
