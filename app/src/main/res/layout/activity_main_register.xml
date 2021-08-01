@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:gravity="center">
 
         <TextView
@@ -89,21 +89,39 @@
             android:hint="@string/et_password"
             android:id="@+id/et_password"
             android:inputType="textPassword"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_phonenumber"
-            android:textColor="@color/black"
-            android:layout_marginTop="15dp"
-            android:textSize="20sp"/>
-
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/et_phonenumber"
-            android:id="@+id/et_phonenumber"
-            android:inputType="phone"/>
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="70"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_phonenumber"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="15dp"
+                    android:textSize="20sp"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/et_phonenumber"
+                    android:id="@+id/et_phonenumber"
+                    android:inputType="phone"/>
+            </LinearLayout>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:text="@string/btn_add_gps"
+                android:textSize="11dp"
+                android:id="@+id/btn_add_gps"
+                android:onClick="gps"/>
+
+        </LinearLayout>
 
         <CheckBox
             android:layout_marginTop="25dp"

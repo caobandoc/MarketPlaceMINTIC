@@ -15,12 +15,22 @@ public class Product {
     private String price;
     private String key;
     private int count;
+    private String user;
 
+    @Ignore
     public Product(String name, String description, String image, String price) {
         this.name = name;
         this.description = description;
         this.image = image;
         this.price = price;
+    }
+
+    public Product(String name, String description, String image, String price, String user) {
+        this.name = name;
+        this.description = description;
+        this.image = image;
+        this.price = price;
+        this.user = user;
     }
 
     @Ignore
@@ -81,6 +91,14 @@ public class Product {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 
     @Override

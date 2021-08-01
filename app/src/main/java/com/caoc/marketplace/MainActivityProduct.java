@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -30,11 +31,14 @@ public class MainActivityProduct extends AppCompatActivity {
     private Product product;
     private FirebaseFirestore db;
 
+    private SharedPreferences shared;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_product);
+
+        shared = getSharedPreferences(Constant.PREFERENCES, MODE_PRIVATE);
 
         et_name = findViewById(R.id.et_name);
         et_description = findViewById(R.id.et_description);
@@ -52,7 +56,11 @@ public class MainActivityProduct extends AppCompatActivity {
         String price = et_price.getText().toString();
 
         if(validateInput(name,description,image,price)){
-            product = new Product(name,description,image,price);
+            product = new Product(name,description,image,price,shared.getString("email", null));
+            if(product.getUser() == null){
+                Toast.makeText(this, "Error al recuperar el email", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             db.collection(Constant.TABLE_PRODUCT)
                     .add(product)

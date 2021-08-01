@@ -56,7 +56,6 @@ public class CartFragment extends Fragment {
     private JSONArray carJson;
 
     private TextView tv_total;
-
     private int total;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -15,7 +17,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.caoc.marketplace.database.Database;
 import com.caoc.marketplace.database.model.User;
 import com.caoc.marketplace.util.Constant;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,7 +24,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.lang.ref.WeakReference;
@@ -37,6 +37,7 @@ public class MainActivityRegister extends AppCompatActivity {
     private EditText et_phonenumber;
 
     private Button btn_register;
+    private Button btn_gps;
 
     private CheckBox cb_term;
 
@@ -45,6 +46,8 @@ public class MainActivityRegister extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+
+    private SharedPreferences shared;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +61,14 @@ public class MainActivityRegister extends AppCompatActivity {
         et_phonenumber = findViewById(R.id.et_phonenumber);
 
         btn_register = findViewById(R.id.btn_register);
-
+        btn_gps = findViewById(R.id.btn_add_gps);
 
         cb_term = findViewById(R.id.cb_term);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+
+        shared = getSharedPreferences(Constant.PREFERENCES, MODE_PRIVATE);
 
     }
 
@@ -89,9 +94,11 @@ public class MainActivityRegister extends AppCompatActivity {
         String email = et_email.getText().toString();
         String password = et_password.getText().toString();
         String phonenumber = et_phonenumber.getText().toString();
+        String latitude = String.valueOf(shared.getFloat("LAT",0));
+        String longitude = String.valueOf(shared.getFloat("LAM",0));
 
         if (validate(names, surnames, email, password, phonenumber)) {
-            userCreate = new User(names, surnames, email, phonenumber);
+            userCreate = new User(names, surnames, email, phonenumber, latitude, longitude);
 
             createUserPassword(email, password);
         }
@@ -178,6 +185,15 @@ public class MainActivityRegister extends AppCompatActivity {
         } else {
             et_phonenumber.setError(null);
         }
+
+        //gps
+        if(shared.getFloat("LAT",0) == 0 && shared.getFloat("LON",0) == 0){
+            btn_gps.setError(getString(R.string.txt_msg_empty_gps));
+            return false;
+        }else{
+            btn_gps.setError(null);
+        }
+
         return true;
     }
 
@@ -189,6 +205,11 @@ public class MainActivityRegister extends AppCompatActivity {
             }
         }
         return true;
+    }
+
+    public void gps(View v){
+        Intent gps = new Intent(this, MapsActivity.class);
+        startActivity(gps);
     }
 
     private static class GetUserTask extends AsyncTask<Void, Void, User> {
@@ -223,19 +244,3 @@ public class MainActivityRegister extends AppCompatActivity {
     }
 
 }
-
-/*
-tv_term = (TextView)findViewById(R.id.tv_term);
-        SpannableString content = new SpannableString(tv_term.getText());
-        content.setSpan(new UnderlineSpan(), 0, tv_term.length(), 0);
-        tv_term.setText(content);
-
-        METODO:
-        tv_term.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent terminos = new Intent(mySefl,MainTerminos.class);
-                startActivity(terminos);
-            }
-        });
- */
