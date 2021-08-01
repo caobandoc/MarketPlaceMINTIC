@@ -16,6 +16,7 @@
     <string name="btn_del_cart">Remove Cart</string>
     <string name="btn_fav_product">Favorite</string>
     <string name="btn_fav_product_del">Remove Favorite</string>
+    <string name="btn_shop">Buy</string>
 
     <!--EDITTEXTS-->
     <string name="et_username">Username</string>
@@ -79,6 +80,8 @@
     <!--MESSAGE-->
     <string name="msg_empty_products">Has no added products</string>
     <string name="msg_empty_favorites">You have no added favorites</string>
+    <string name="msg_add_max">The quantity of products cannot be increased</string>
+    <string name="msg_substract_min">Cannot reduce the quantity of products</string>
 
     <string name="title_activity_pantalla_principal">ScreenPrincipal</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

@@ -42,12 +42,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:padding="16dp">
+                android:padding="5dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="161dp"
-                    android:layout_weight="60"
+                    android:layout_weight="55"
                     android:orientation="vertical">
 
                     <TextView
@@ -71,7 +71,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="30"
+                    android:layout_weight="45"
                     android:orientation="vertical"
                     android:gravity="center">
                     <com.google.android.material.button.MaterialButton
@@ -86,7 +86,6 @@
                         android:id="@+id/row_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:text="precio"
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:textColor="?android:attr/textColorSecondary" />
@@ -94,10 +93,11 @@
                         android:id="@+id/row_total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="10dp"
                         android:text="total"
                         android:textAppearance="?attr/textAppearanceBody2"
-                        android:textColor="?android:attr/textColorSecondary" />
+                        android:textColor="@color/black"
+                        android:textSize="25dp"/>
                 </LinearLayout>
 
                 <!-- Title, secondary and supporting text -->

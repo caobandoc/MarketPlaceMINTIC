@@ -43,7 +43,6 @@ import java.util.List;
 
 public class FavoriteFragment extends Fragment {
 
-    private FavoriteViewModel slideshowViewModel;
     private FragmentFavoriteBinding binding;
 
     private RecyclerView rv_products;
@@ -60,7 +59,6 @@ public class FavoriteFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        slideshowViewModel = new ViewModelProvider(this).get(FavoriteViewModel.class);
 
         binding = FragmentFavoriteBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -240,7 +238,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
                     context.startActivity(showProd);
                     break;
                 case R.id.btn_add_cart:
-                    addFav();
+                    addCar();
                     break;
             }
         }
@@ -290,10 +288,10 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
             return false;
         }
 
-        private void addFav(){
+        private void addCar(){
             try {
                 //Obtener datos guardados
-                String market = shared.getString(Constant.LIST_FAV, "[]");
+                String market = shared.getString(Constant.LIST_CART, "[]");
                 JSONArray jMarket = new JSONArray(market);
 
                 if(existObject(jMarket)){
@@ -309,7 +307,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
                 jMarket.put(product);
 
                 SharedPreferences.Editor editor = shared.edit();
-                editor.putString(Constant.LIST_FAV, jMarket.toString());
+                editor.putString(Constant.LIST_CART, jMarket.toString());
                 editor.commit();
 
                 Toast.makeText(context, R.string.txt_msg_prod_add, Toast.LENGTH_SHORT).show();

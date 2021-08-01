@@ -41,7 +41,6 @@ import java.util.List;
 
 public class ProductFragment extends Fragment {
 
-    private ProductViewModel productViewModel;
     private FragmentProductBinding binding;
 
     private RecyclerView rv_products;
@@ -55,8 +54,6 @@ public class ProductFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
-
         binding = FragmentProductBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
@@ -67,7 +64,6 @@ public class ProductFragment extends Fragment {
 
         db = FirebaseFirestore.getInstance();
 
-        //new GetProductTask(ProductFragment.this).execute();
         db.collection(Constant.TABLE_PRODUCT)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

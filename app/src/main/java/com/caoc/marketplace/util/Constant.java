@@ -11,4 +11,5 @@ public class Constant {
     public static final String TABLE_PRODUCT = "product";
     public static final String LIST_CART = "cart";
     public static final String LIST_FAV = "favorite";
+    public static final String COUNT = "count";
 }
