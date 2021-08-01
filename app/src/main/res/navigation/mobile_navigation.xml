@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/nav_products"
         android:name="com.caoc.marketplace.ui.product.ProductFragment"
-        android:label="@string/menu_cart"
+        android:label="@string/menu_products"
         tools:layout="@layout/fragment_product" />
 
     <fragment
@@ -26,6 +26,6 @@
     <fragment
         android:id="@+id/nav_cart"
         android:name="com.caoc.marketplace.ui.cart.CartFragment"
-        android:label="@string/menu_favorite"
+        android:label="@string/menu_cart"
         tools:layout="@layout/fragment_cart" />
 </navigation>

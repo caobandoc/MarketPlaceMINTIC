@@ -20,7 +20,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private User users = new User();
 
     private SharedPreferences preferences;
-    //private FirebaseFirestore db;
     private FirebaseAuth mAuth;
 
     @Override
@@ -42,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            //reload();
+
         }
     }
 

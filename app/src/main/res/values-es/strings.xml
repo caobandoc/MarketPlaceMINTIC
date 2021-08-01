@@ -76,4 +76,7 @@
     <string name="txt_msg_prod_del_exist">El producto ya se encuentra eliminado</string>
     <string name="msg_empty_products">No tienes productos agregados</string>
     <string name="msg_empty_favorites">No tienes favoritos agregados</string>
+    <string name="msg_add_max">No se pueden aumentar la cantidad de productos</string>
+    <string name="msg_substract_min">No se puede reducir la cantidad de productos</string>
+    <string name="btn_shop">Comprar</string>
 </resources>

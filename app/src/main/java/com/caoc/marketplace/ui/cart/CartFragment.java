@@ -15,10 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,7 +40,6 @@ import java.util.List;
 
 public class CartFragment extends Fragment {
 
-    private CartViewModel slideshowViewModel;
     private FragmentCartBinding binding;
 
     private RecyclerView rv_products;
@@ -59,8 +55,11 @@ public class CartFragment extends Fragment {
     private SharedPreferences preferences;
     private JSONArray carJson;
 
+    private TextView tv_total;
+
+    private int total;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel = new ViewModelProvider(this).get(CartViewModel.class);
 
         binding = FragmentCartBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -68,6 +67,8 @@ public class CartFragment extends Fragment {
         myself = getActivity();
 
         db = FirebaseFirestore.getInstance();
+
+        tv_total = root.findViewById(R.id.tv_total);
 
         preferences = myself.getSharedPreferences(Constant.PREFERENCES, myself.MODE_PRIVATE);
         String email = preferences.getString("email", null);
@@ -81,6 +82,7 @@ public class CartFragment extends Fragment {
 
         if(fav.equals("[]")){
             Toast.makeText(myself, R.string.msg_empty_products, Toast.LENGTH_SHORT).show();
+            setTotal(total);
             return root;
         }
 
@@ -138,7 +140,7 @@ public class CartFragment extends Fragment {
         for (int i = 0; i < carJson.length(); i++) {
             JSONObject object = carJson.getJSONObject(i);
             if(object.getString("key").equals(key)){
-                return object.getInt("count");
+                return object.getInt(Constant.COUNT);
             }
         }
 
@@ -152,9 +154,26 @@ public class CartFragment extends Fragment {
     }
 
     private void loadProducts(){
-        mAdapter = new ProductAdapter(products, myself);
+        mAdapter = new ProductAdapter(products, myself, this);
         rv_products.setAdapter(mAdapter);
 
+    }
+
+    public int getTotal(){
+        return total;
+    }
+
+    public void setTotal(int t){
+        total = t;
+        String txt = String.valueOf(t);
+        String fin = "$";
+        for(int i = 0; i<txt.length();i++){
+            if(fin.length()>1 && (txt.length()-i)%3 == 0){
+                fin = fin + ".";
+            }
+            fin = fin + txt.charAt(i);
+        }
+        tv_total.setText(fin);
     }
 }
 
@@ -163,10 +182,12 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
     private List<Product> productModelList;
     private Activity myself;
     private SharedPreferences shared;
+    private CartFragment cf;
 
-    public ProductAdapter(List<Product> productModelList, Activity myself){
+    public ProductAdapter(List<Product> productModelList, Activity myself, CartFragment cf){
         this.productModelList = productModelList;
         this.myself = myself;
+        this.cf = cf;
         shared = myself.getSharedPreferences(Constant.PREFERENCES, myself.MODE_PRIVATE);
     }
 
@@ -178,7 +199,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(ProductAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
 
         String key = this.productModelList.get(position).getKey();
         String name = this.productModelList.get(position).getName();
@@ -202,6 +223,15 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
             total = total + totalR.charAt(i);
         }
 
+        //SUMATORIATOTAL:
+        int t = cf.getTotal();
+        int tAcum = Integer.parseInt(totalR);
+        cf.setTotal(t+tAcum);
+
+        if(holder.getCf() == null){
+            holder.setCf(cf);
+        }
+
         holder.product = this.productModelList.get(position);
         holder.key.setText(key);
         holder.name.setText(name);
@@ -210,6 +240,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
         holder.count.setText(count);
         holder.total.setText(total);
         Glide.with(myself).load(urlImage).into(holder.image);
+
 
         holder.setOnClickListeners();
 
@@ -233,6 +264,8 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
         private Button btn_del;
         private Button btn_add;
         private Button btn_substract;
+
+        private CartFragment cf;
 
         private Context context;
 
@@ -261,6 +294,14 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
         }
 
+        public void setCf(CartFragment cf){
+            this.cf = cf;
+        }
+
+        public CartFragment getCf(){
+            return cf;
+        }
+
         public void setOnClickListeners(){
             btn_show_prod.setOnClickListener(this);
             btn_del.setOnClickListener(this);
@@ -271,6 +312,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
         @Override
         public void onClick(View v) {
+            int cantidad = Integer.parseInt((String) count.getText());
             switch (v.getId()){
                 case R.id.btn_del:
                     delCart();
@@ -282,12 +324,99 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
                     context.startActivity(showProd);
                     break;
                 case R.id.btn_add:
-                    Toast.makeText(context, "Boton sumar", Toast.LENGTH_SHORT).show();
+                    if(cantidad == 99){
+                        Toast.makeText(context, R.string.msg_add_max, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    try {
+                        //Obtener datos guardados
+                        String market = shared.getString(Constant.LIST_CART, "[]");
+                        JSONArray jMarket = new JSONArray(market);
+
+                        Log.d("jMarket read", jMarket.toString());
+
+                        int index = indexObject(jMarket);
+
+                        if(index == -1){
+                            Toast.makeText(context, R.string.txt_msg_prod_del_exist, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        JSONObject jProduct = jMarket.getJSONObject(index);
+                        jProduct.put("count", String.valueOf(++cantidad));
+
+                        updateValor(cantidad);
+
+                        cf.setTotal(cf.getTotal()+Integer.parseInt(product.getPrice()));
+
+                        SharedPreferences.Editor editor = shared.edit();
+                        editor.putString(Constant.LIST_CART, jMarket.toString());
+                        editor.commit();
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                     break;
                 case R.id.btn_substract:
-                    Toast.makeText(context, "Boton cerrar", Toast.LENGTH_SHORT).show();
+                    if(cantidad == 1){
+                        Toast.makeText(context, R.string.msg_substract_min, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    try {
+                        //Obtener datos guardados
+                        String market = shared.getString(Constant.LIST_CART, "[]");
+                        JSONArray jMarket = new JSONArray(market);
+
+                        Log.d("jMarket read", jMarket.toString());
+
+                        int index = indexObject(jMarket);
+
+                        if(index == -1){
+                            Toast.makeText(context, R.string.txt_msg_prod_del_exist, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        JSONObject jProduct = jMarket.getJSONObject(index);
+                        jProduct.put("count", String.valueOf(--cantidad));
+
+                        updateValor(cantidad);
+
+                        cf.setTotal(cf.getTotal()-Integer.parseInt(product.getPrice()));
+
+                        SharedPreferences.Editor editor = shared.edit();
+                        editor.putString(Constant.LIST_CART, jMarket.toString());
+                        editor.commit();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+                default:
+                    Toast.makeText(context, "No se pudo leer el boton", Toast.LENGTH_SHORT).show();
                     break;
             }
+        }
+
+        private void updateValor(int cantidad){
+            count.setText(String.valueOf(cantidad));
+            int valorActual = Integer.parseInt(product.getPrice());
+            String priceR = String.valueOf(valorActual * cantidad);
+            StringBuilder newTotal = new StringBuilder();
+            newTotal.append("$");
+
+            for(int i = 0; i<priceR.length();i++){
+                if(newTotal.length()>1 && (priceR.length()-i)%3 == 0){
+                    newTotal.append(".");
+                }
+                newTotal.append(priceR.charAt(i));
+            }
+
+            total.setText(newTotal.toString());
         }
 
         private int indexObject(JSONArray json) throws JSONException {
