@@ -1,4 +1,4 @@
-package com.caoc.marketplace.ui.product;
+package com.caoc.marketplace.ui.cart;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,7 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,7 +26,7 @@ import com.bumptech.glide.Glide;
 import com.caoc.marketplace.ActivityProduct;
 import com.caoc.marketplace.R;
 import com.caoc.marketplace.database.model.Product;
-import com.caoc.marketplace.databinding.FragmentProductBinding;
+import com.caoc.marketplace.databinding.FragmentCartBinding;
 import com.caoc.marketplace.util.Constant;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,10 +41,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductFragment extends Fragment {
+public class CartFragment extends Fragment {
 
-    private ProductViewModel productViewModel;
-    private FragmentProductBinding binding;
+    private CartViewModel slideshowViewModel;
+    private FragmentCartBinding binding;
 
     private RecyclerView rv_products;
     private RecyclerView.Adapter mAdapter;
@@ -50,35 +52,73 @@ public class ProductFragment extends Fragment {
     private Activity myself;
 
     private ArrayList<Product> products;
+    private ArrayList<String> keys;
 
     private FirebaseFirestore db;
 
+    private SharedPreferences preferences;
+    private JSONArray carJson;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        slideshowViewModel = new ViewModelProvider(this).get(CartViewModel.class);
 
-        productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
-
-        binding = FragmentProductBinding.inflate(inflater, container, false);
+        binding = FragmentCartBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         myself = getActivity();
 
-        //Root se toma como la actividad principal para el findViewById
-        //getActivity() es el this
-
         db = FirebaseFirestore.getInstance();
 
-        //new GetProductTask(ProductFragment.this).execute();
+        preferences = myself.getSharedPreferences(Constant.PREFERENCES, myself.MODE_PRIVATE);
+        String email = preferences.getString("email", null);
+
+        if(email == null){
+            Toast.makeText(myself, "ERROR AL INGRESAR EL LOGIN", Toast.LENGTH_SHORT).show();
+            return root;
+        }
+
+        String fav = preferences.getString(Constant.LIST_CART, "[]");
+
+        if(fav.equals("[]")){
+            Toast.makeText(myself, R.string.msg_empty_products, Toast.LENGTH_SHORT).show();
+            return root;
+        }
+
+        try {
+            carJson = new JSONArray(fav);
+            keys = new ArrayList<String>();
+            for (int i = 0; i < carJson.length(); i++) {
+                JSONObject object = carJson.getJSONObject(i);
+                if(object.getString("user").equals(email)){
+                    keys.add(object.getString("key"));
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(myself, "ERROR EN EL JSON", Toast.LENGTH_SHORT).show();
+        }
+
         db.collection(Constant.TABLE_PRODUCT)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            products = new ArrayList<Product>();
+                            products = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Product prod = document.toObject(Product.class);
-                                prod.setKey(document.getId());
-                                products.add(prod);
+
+                                if(keys.contains(document.getId())){
+                                    Product prod = document.toObject(Product.class);
+                                    prod.setKey(document.getId());
+
+                                    try {
+                                        prod.setCount( getCount(document.getId()) );
+                                    } catch (JSONException e) {
+                                        prod.setCount( 1 );
+                                    }
+                                    products.add(prod);
+                                }
+
                             }
                             loadProducts();
                         } else {
@@ -87,10 +127,22 @@ public class ProductFragment extends Fragment {
                     }
                 });
 
-        rv_products = root.findViewById(R.id.rv_products);
+
+        rv_products = root.findViewById(R.id.rv_cart);
         rv_products.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return root;
+    }
+
+    private int getCount(String key) throws JSONException{
+        for (int i = 0; i < carJson.length(); i++) {
+            JSONObject object = carJson.getJSONObject(i);
+            if(object.getString("key").equals(key)){
+                return object.getInt("count");
+            }
+        }
+
+        return 1;
     }
 
     @Override
@@ -101,32 +153,33 @@ public class ProductFragment extends Fragment {
 
     private void loadProducts(){
         mAdapter = new ProductAdapter(products, myself);
-
         rv_products.setAdapter(mAdapter);
 
     }
-
 }
 
 class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
     private List<Product> productModelList;
     private Activity myself;
+    private SharedPreferences shared;
 
     public ProductAdapter(List<Product> productModelList, Activity myself){
         this.productModelList = productModelList;
         this.myself = myself;
+        shared = myself.getSharedPreferences(Constant.PREFERENCES, myself.MODE_PRIVATE);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_product , parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_cart , parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(ProductAdapter.ViewHolder holder, int position) {
+
         String key = this.productModelList.get(position).getKey();
         String name = this.productModelList.get(position).getName();
         String description = this.productModelList.get(position).getDescription();
@@ -139,11 +192,23 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
             }
             price = price + priceR.charAt(i);
         }
+        String count = String.valueOf(this.productModelList.get(position).getCount());
+        String totalR = String.valueOf(Integer.parseInt(priceR) * this.productModelList.get(position).getCount());
+        String total = "$";
+        for(int i = 0; i<totalR.length();i++){
+            if(total.length()>1 && (totalR.length()-i)%3 == 0){
+                total = total + ".";
+            }
+            total = total + totalR.charAt(i);
+        }
 
+        holder.product = this.productModelList.get(position);
         holder.key.setText(key);
         holder.name.setText(name);
         holder.description.setText(description);
         holder.price.setText(price);
+        holder.count.setText(count);
+        holder.total.setText(total);
         Glide.with(myself).load(urlImage).into(holder.image);
 
         holder.setOnClickListeners();
@@ -161,14 +226,19 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
         private ImageView image;
         private TextView price;
         private TextView key;
+        private TextView count;
+        private TextView total;
 
-        private Button btn_addProd;
-        private Button btn_addFav;
-        private Button btn_showProd;
+        private Button btn_show_prod;
+        private Button btn_del;
+        private Button btn_add;
+        private Button btn_substract;
 
         private Context context;
 
         private SharedPreferences shared;
+
+        private Product product;
 
         public ViewHolder(View v){
             super(v);
@@ -179,26 +249,31 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
             description = v.findViewById(R.id.row_description);
             image = v.findViewById(R.id.row_image);
             price = v.findViewById(R.id.row_price);
+            count = v.findViewById(R.id.tv_count);
+            total = v.findViewById(R.id.row_total);
 
-            btn_addProd = v.findViewById(R.id.btn_add_cart);
-            btn_addFav = v.findViewById(R.id.btn_fav_prod);
-            btn_showProd = v.findViewById(R.id.btn_show_prod);
+            btn_show_prod = v.findViewById(R.id.btn_show_prod);
+            btn_del = v.findViewById(R.id.btn_del);
+            btn_add = v.findViewById(R.id.btn_add);
+            btn_substract = v.findViewById(R.id.btn_substract);
 
             shared = context.getSharedPreferences(Constant.PREFERENCES, context.MODE_PRIVATE);
 
         }
 
         public void setOnClickListeners(){
-            btn_addProd.setOnClickListener(this);
-            btn_addFav.setOnClickListener(this);
-            btn_showProd.setOnClickListener(this);
+            btn_show_prod.setOnClickListener(this);
+            btn_del.setOnClickListener(this);
+            btn_add.setOnClickListener(this);
+            btn_substract.setOnClickListener(this);
+
         }
 
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                case R.id.btn_add_cart:
-                    addCar();
+                case R.id.btn_del:
+                    delCart();
                     break;
 
                 case R.id.btn_show_prod:
@@ -206,78 +281,49 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
                     showProd.putExtra("key", key.getText().toString());
                     context.startActivity(showProd);
                     break;
-
-                case R.id.btn_fav_prod:
-                    addFav();
+                case R.id.btn_add:
+                    Toast.makeText(context, "Boton sumar", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.btn_substract:
+                    Toast.makeText(context, "Boton cerrar", Toast.LENGTH_SHORT).show();
                     break;
             }
         }
 
-        private boolean existObject(JSONArray json) throws JSONException {
+        private int indexObject(JSONArray json) throws JSONException {
             for (int i = 0; i < json.length(); i++) {
                 JSONObject object = json.getJSONObject(i);
                 if(object.getString("key").equals(key.getText().toString())){
-                    return true;
+                    return i;
                 }
             }
-            return false;
+            return -1;
         }
 
-        private void addFav(){
-            try {
-                //Obtener datos guardados
-                String market = shared.getString(Constant.LIST_FAV, "[]");
-                JSONArray jMarket = new JSONArray(market);
-
-                if(existObject(jMarket)){
-                    Toast.makeText(context, R.string.txt_msg_prod_add_exist, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                //Producto a guardar en el json
-                JSONObject product = new JSONObject();
-                product.put("user", shared.getString("email", null));
-                product.put("key", key.getText().toString());
-
-                jMarket.put(product);
-
-                SharedPreferences.Editor editor = shared.edit();
-                editor.putString(Constant.LIST_FAV, jMarket.toString());
-                editor.commit();
-
-                Toast.makeText(context, R.string.txt_msg_prod_add, Toast.LENGTH_SHORT).show();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        private void addCar(){
+        private void delCart(){
             try {
                 //Obtener datos guardados
                 String market = shared.getString(Constant.LIST_CART, "[]");
                 JSONArray jMarket = new JSONArray(market);
 
-                if(existObject(jMarket)){
-                    Toast.makeText(context, R.string.txt_msg_prod_add_exist, Toast.LENGTH_SHORT).show();
+                int index = indexObject(jMarket);
+
+                if(index == -1){
+                    Toast.makeText(context, R.string.txt_msg_prod_del_exist, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                //Producto a guardar en el json
-                JSONObject product = new JSONObject();
-                product.put("user", shared.getString("email", null));
-                product.put("key", key.getText().toString());
-                product.put("count", 1);
-
-                jMarket.put(product);
+                jMarket.remove(index);
 
                 SharedPreferences.Editor editor = shared.edit();
                 editor.putString(Constant.LIST_CART, jMarket.toString());
                 editor.commit();
 
-                Toast.makeText(context, R.string.txt_msg_prod_add, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.txt_msg_prod_del, Toast.LENGTH_SHORT).show();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
 }
+

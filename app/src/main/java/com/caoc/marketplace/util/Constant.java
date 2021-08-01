@@ -9,4 +9,6 @@ public class Constant {
     public static final String TABLE_USER = "user";
     public static final String PREFERENCES = "MY_PREFERENCES";
     public static final String TABLE_PRODUCT = "product";
+    public static final String LIST_CART = "cart";
+    public static final String LIST_FAV = "favorite";
 }

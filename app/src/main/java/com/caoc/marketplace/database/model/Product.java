@@ -14,6 +14,7 @@ public class Product {
     private String image;
     private String price;
     private String key;
+    private int count;
 
     public Product(String name, String description, String image, String price) {
         this.name = name;
@@ -72,5 +73,13 @@ public class Product {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

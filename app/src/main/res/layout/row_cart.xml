@@ -46,7 +46,7 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="161dp"
                     android:layout_weight="60"
                     android:orientation="vertical">
 
@@ -55,7 +55,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="titulo"
-                        android:textAppearance="?attr/textAppearanceHeadline6" />
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:textSize="30dp" />
 
                     <TextView
                         android:id="@+id/row_description"
@@ -66,15 +67,6 @@
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:textColor="?android:attr/textColorSecondary"
                         android:visibility="gone" />
-
-                    <TextView
-                        android:id="@+id/row_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="precio"
-                        android:textAppearance="?attr/textAppearanceBody2"
-                        android:textColor="?android:attr/textColorSecondary" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="0dp"
@@ -90,10 +82,25 @@
                         android:text="@string/btn_show_prod"
                         app:icon="@drawable/ic_search_outline"
                         />
+                    <TextView
+                        android:id="@+id/row_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="precio"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textColor="?android:attr/textColorSecondary" />
+                    <TextView
+                        android:id="@+id/row_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="total"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textColor="?android:attr/textColorSecondary" />
                 </LinearLayout>
 
                 <!-- Title, secondary and supporting text -->
-
 
             </LinearLayout>
             <!-- Button -->
@@ -102,22 +109,39 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:orientation="horizontal">
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_add_cart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    app:icon="@drawable/ic_add_shopping_cart"
-                    android:text="@string/btn_add_cart"
-                    />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_fav_prod"
+                    android:id="@+id/btn_del"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:icon="@drawable/ic_favorite_24"
-                    android:text="@string/btn_fav_product"
+                    app:icon="@drawable/ic_remove_shopping_cart"
+                    android:text="@string/btn_del_cart"
+                    android:layout_marginRight="10dp"
                     />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:id="@+id/btn_add"
+                        android:drawableLeft="@drawable/ic_plus"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="99"
+                        android:gravity="center"
+                        android:id="@+id/tv_count"/>
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:id="@+id/btn_substract"
+                        android:drawableLeft="@drawable/ic_horizontal_line"/>
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

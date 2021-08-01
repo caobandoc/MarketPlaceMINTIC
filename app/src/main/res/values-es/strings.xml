@@ -33,8 +33,8 @@
     <string name="nav_header_desc">Encabezado de navegación</string>
     <string name="action_settings">Configuracion</string>
     <string name="menu_home">Casa</string>
-    <string name="menu_gallery">Galeria</string>
-    <string name="menu_slideshow">Diapositivas</string>
+    <string name="menu_cart">Carro de Compras</string>
+    <string name="menu_favorite">Favoritos</string>
     <string name="sw_terms">Acepto la política de declaración de privacidad y los términos y condiciones de uso del sitio.</string>
     <string name="txt_msg_fail">Los datos son incorrectos</string>
     <string name="menu_products">Productos</string>
@@ -56,7 +56,7 @@
     <string name="txt_msg_fail_empty">Uno o más campos están vacíos</string>
     <string name="txt_msg_add_product_fail">No se pudo guardar el producto</string>
     <string name="action_log_out">Cerrar sesión</string>
-    <string name="btn_add_cart">Agregar al carro</string>
+    <string name="btn_add_cart">Agregar Carro</string>
     <string name="txt_msg_empty">Completa los datos</string>
     <string name="txt_msg_email_empty">El correo no se encuentra registrado</string>
     <string name="txt_msg_db_fail">La base de datos no está funcionando</string>
@@ -67,4 +67,13 @@
     <string name="txt_msg_url_fail">La URL es incorrecta</string>
     <string name="txt_msg_login_success">Ingreso exitoso</string>
     <string name="btn_show_prod">Ver</string>
+    <string name="btn_fav_product">Favorito</string>
+    <string name="txt_msg_prod_add_exist">El producto ya se encuentra agregado</string>
+    <string name="txt_msg_prod_add">Producto agregado</string>
+    <string name="btn_fav_product_del">Remover Favorito</string>
+    <string name="btn_del_cart">Eliminar del Carro</string>
+    <string name="txt_msg_prod_del">Producto eliminado</string>
+    <string name="txt_msg_prod_del_exist">El producto ya se encuentra eliminado</string>
+    <string name="msg_empty_products">No tienes productos agregados</string>
+    <string name="msg_empty_favorites">No tienes favoritos agregados</string>
 </resources>

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.caoc.marketplace.database.model.User;
 import com.caoc.marketplace.util.Constant;
@@ -46,19 +46,6 @@ public class PantallaPrincipal extends AppCompatActivity {
         preferences = getSharedPreferences(Constant.PREFERENCES, MODE_PRIVATE);
         String email = preferences.getString("email", null);
 
-        DocumentReference docRef = db.collection(Constant.TABLE_USER).document(email);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        userLogin = document.toObject(User.class);
-                    }
-                }
-            }
-        });
-
         binding = ActivityPantallaPrincipalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -72,10 +59,34 @@ public class PantallaPrincipal extends AppCompatActivity {
         });
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
+
+        View viewNavigation = navigationView.getHeaderView(0);
+        TextView nameNav = viewNavigation.findViewById(R.id.name_user);
+        TextView emailNav = viewNavigation.findViewById(R.id.email_user);
+
+        emailNav.setText(email);
+
+        DocumentReference docRef = db.collection(Constant.TABLE_USER).document(email);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    String nameC;
+                    userLogin = document.toObject(User.class);
+                    nameC = userLogin.getName() + " " + userLogin.getSurname();
+                    nameNav.setText(nameC);
+                    if (document.exists()) {
+                        userLogin = document.toObject(User.class);
+                    }
+                }
+            }
+        });
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_products, R.id.nav_favorite, R.id.nav_cart)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_pantalla_principal);
@@ -121,15 +132,5 @@ public class PantallaPrincipal extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-/*
-    public void addCart(View v){
-        Toast.makeText(this, "Agregado con exito", Toast.LENGTH_SHORT).show();
-    }
 
-    public void showProd(View v){
-        Intent showProd = new Intent(this, ActivityProduct.class);
-        showProd.putExtra("key", );
-        startActivity(showProd);
-    }
-*/
 }
