@@ -27,8 +27,7 @@
             android:text="@string/btn_shop"
             android:layout_marginHorizontal="10dp"
             app:backgroundTint="@color/white"
-            android:textColor="@color/black"
-            />
+            android:textColor="@color/black"/>
         <TextView
             android:id="@+id/tv_total"
             android:layout_width="0dp"

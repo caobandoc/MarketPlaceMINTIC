@@ -71,10 +71,10 @@
                         android:id="@+id/row_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="20dp"
                         android:text="precio"
                         android:textAppearance="?attr/textAppearanceBody2"
-                        android:textColor="?android:attr/textColorSecondary" />
+                        android:textColor="@color/black" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="0dp"

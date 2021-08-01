@@ -58,6 +58,8 @@ public class CartFragment extends Fragment {
     private TextView tv_total;
     private int total;
 
+    private Button btn_buy;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentCartBinding.inflate(inflater, container, false);
@@ -68,6 +70,14 @@ public class CartFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
 
         tv_total = root.findViewById(R.id.tv_total);
+        btn_buy = root.findViewById(R.id.btn_shop);
+
+        btn_buy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buy(v);
+            }
+        });
 
         preferences = myself.getSharedPreferences(Constant.PREFERENCES, myself.MODE_PRIVATE);
         String email = preferences.getString("email", null);
@@ -173,6 +183,10 @@ public class CartFragment extends Fragment {
             fin = fin + txt.charAt(i);
         }
         tv_total.setText(fin);
+    }
+
+    public void buy(View v){
+        Toast.makeText(myself, "BOTON COMPRAR", Toast.LENGTH_SHORT).show();
     }
 }
 
