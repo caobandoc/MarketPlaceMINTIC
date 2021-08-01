@@ -10,14 +10,22 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.caoc.marketplace.database.model.Product;
+import com.caoc.marketplace.database.model.User;
 import com.caoc.marketplace.util.Constant;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class ActivityProduct extends AppCompatActivity {
+public class ActivityProduct extends AppCompatActivity implements OnMapReadyCallback {
 
     private FirebaseFirestore db;
 
@@ -27,18 +35,24 @@ public class ActivityProduct extends AppCompatActivity {
     private ImageView image;
 
     private Product prod;
+    private User user;
+
+    private GoogleMap mMap;
+
+    private ActivityProduct myself;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
 
+        myself = this;
+
         db = FirebaseFirestore.getInstance();
         title = findViewById(R.id.tv_titulo);
         description = findViewById(R.id.tv_description);
         prices = findViewById(R.id.tv_price);
         image = findViewById(R.id.iv_image);
-
 
         String idProd = getIntent().getStringExtra("key");
 
@@ -62,6 +76,8 @@ public class ActivityProduct extends AppCompatActivity {
                         }
 
                         prices.setText(price);
+
+                        getUser(prod.getUser());
                         Glide.with(ActivityProduct.this).load(prod.getImage()).into(image);
                     } else {
                         Log.d("Firebase", "No such document");
@@ -71,7 +87,43 @@ public class ActivityProduct extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
 
+        float latitude = Float.parseFloat(user.getLatitude());
+        float longitude = Float.parseFloat(user.getLongitude());
+
+        // Add a marker in Sydney and move the camera
+        LatLng home = new LatLng(latitude, longitude);
+        mMap.addMarker(new MarkerOptions().position(home).title("Home"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(home));
+        mMap.setMinZoomPreference(15.0f);
+        mMap.setMaxZoomPreference(20.0f);
+
+    }
+
+    public void getUser(String email){
+        DocumentReference docRef = db.collection(Constant.TABLE_USER).document(email);
+
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        user = document.toObject(User.class);
+                        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                                .findFragmentById(R.id.map);
+                        mapFragment.getMapAsync(myself);
+                    } else {
+                        Log.d("document", "No existe el usuario");
+                    }
+                } else {
+                    Log.d("conection", "get failed with ", task.getException());
+                }
+            }
+        });
     }
 }

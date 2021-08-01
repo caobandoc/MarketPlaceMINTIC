@@ -13,12 +13,24 @@ public class User {
     private String surname;
     private String email;
     private String phone;
+    private String latitude;
+    private String longitude;
 
+    @Ignore
     public User(String name, String surname, String email, String phone) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.phone = phone;
+    }
+
+    public User(String name, String surname, String email, String phone, String latitude, String longitude) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.phone = phone;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     @Ignore
@@ -63,6 +75,22 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 
     @Override

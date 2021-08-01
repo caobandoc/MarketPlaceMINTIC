@@ -17,6 +17,7 @@
     <string name="btn_fav_product">Favorite</string>
     <string name="btn_fav_product_del">Remove Favorite</string>
     <string name="btn_shop">Buy</string>
+    <string name="btn_add_gps">Select your location</string>
 
     <!--EDITTEXTS-->
     <string name="et_username">Username</string>
@@ -66,6 +67,7 @@
     <string name="txt_msg_prod_del_exist">The product has already been removed</string>
     <string name="txt_msg_prod_add">Product added</string>
     <string name="txt_msg_prod_del">Product removed</string>
+    <string name="txt_msg_empty_gps">Select a location</string>
 
     <!--SWITCH-->
     <string name="sw_terms">I accept the privacy statement policy and terms and conditions of use of the site.</string>
@@ -92,7 +94,7 @@
     <string name="action_settings">Settings</string>
 
     <string name="action_log_out">Log out</string>
-
+    <string name="title_activity_maps">MapsActivity</string>
 
 
 </resources>

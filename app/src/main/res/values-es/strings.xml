@@ -79,4 +79,6 @@
     <string name="msg_add_max">No se pueden aumentar la cantidad de productos</string>
     <string name="msg_substract_min">No se puede reducir la cantidad de productos</string>
     <string name="btn_shop">Comprar</string>
+    <string name="btn_add_gps">Selecciona tu ubicación</string>
+    <string name="txt_msg_empty_gps">Selecciona una ubicación</string>
 </resources>
