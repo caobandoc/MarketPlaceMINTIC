@@ -226,7 +226,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
         private void addFav(){
             try {
                 //Obtener datos guardados
-                String market = shared.getString(Constant.ADD_FAV, "[]");
+                String market = shared.getString(Constant.LIST_FAV, "[]");
                 JSONArray jMarket = new JSONArray(market);
 
                 if(existObject(jMarket)){
@@ -242,7 +242,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
                 jMarket.put(product);
 
                 SharedPreferences.Editor editor = shared.edit();
-                editor.putString(Constant.ADD_FAV, jMarket.toString());
+                editor.putString(Constant.LIST_FAV, jMarket.toString());
                 editor.commit();
 
                 Toast.makeText(context, R.string.txt_msg_prod_add, Toast.LENGTH_SHORT).show();
@@ -254,7 +254,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
         private void addCar(){
             try {
                 //Obtener datos guardados
-                String market = shared.getString(Constant.ADD_CART, "[]");
+                String market = shared.getString(Constant.LIST_CART, "[]");
                 JSONArray jMarket = new JSONArray(market);
 
                 if(existObject(jMarket)){
@@ -271,7 +271,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
                 jMarket.put(product);
 
                 SharedPreferences.Editor editor = shared.edit();
-                editor.putString(Constant.ADD_CART, jMarket.toString());
+                editor.putString(Constant.LIST_CART, jMarket.toString());
                 editor.commit();
 
                 Toast.makeText(context, R.string.txt_msg_prod_add, Toast.LENGTH_SHORT).show();

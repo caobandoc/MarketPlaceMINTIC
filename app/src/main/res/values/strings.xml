@@ -62,7 +62,9 @@
     <string name="txt_msg_url_fail">The URL is wrong</string>
     <string name="txt_msg_login_success">Login success</string>
     <string name="txt_msg_prod_add_exist">The product is already added</string>
+    <string name="txt_msg_prod_del_exist">The product has already been removed</string>
     <string name="txt_msg_prod_add">Product added</string>
+    <string name="txt_msg_prod_del">Product removed</string>
 
     <!--SWITCH-->
     <string name="sw_terms">I accept the privacy statement policy and terms and conditions of use of the site.</string>
@@ -73,6 +75,10 @@
     <string name="menu_products">Products</string>
     <string name="menu_favorite">Favorites</string>
     <string name="menu_cart">Shopping Cart</string>
+
+    <!--MESSAGE-->
+    <string name="msg_empty_products">Has no added products</string>
+    <string name="msg_empty_favorites">You have no added favorites</string>
 
     <string name="title_activity_pantalla_principal">ScreenPrincipal</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

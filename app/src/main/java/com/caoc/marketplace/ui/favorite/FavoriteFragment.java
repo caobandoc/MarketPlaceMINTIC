@@ -77,15 +77,16 @@ public class FavoriteFragment extends Fragment {
             return root;
         }
 
-        String fav = preferences.getString(Constant.ADD_FAV, "[]");
+        String fav = preferences.getString(Constant.LIST_FAV, "[]");
 
         if(fav.equals("[]")){
-            Toast.makeText(myself, "NO TIENE FAVORITOS AGREGADOS", Toast.LENGTH_SHORT).show();
+            Toast.makeText(myself, R.string.msg_empty_favorites, Toast.LENGTH_SHORT).show();
             return root;
         }
 
         try {
             JSONArray favJson = new JSONArray(fav);
+            keys = new ArrayList<String>();
             for (int i = 0; i < favJson.length(); i++) {
                 JSONObject object = favJson.getJSONObject(i);
                 if(object.getString("user").equals(email)){
@@ -98,17 +99,23 @@ public class FavoriteFragment extends Fragment {
         }
 
         db.collection(Constant.TABLE_PRODUCT)
-                .whereEqualTo("capital", true)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            products = new ArrayList<Product>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("CORRECTO", document.getId() + " => " + document.getData());
+                                if(keys.contains(document.getId())){
+                                    Product prod = document.toObject(Product.class);
+                                    prod.setKey(document.getId());
+                                    products.add(prod);
+                                }
+
                             }
+                            loadProducts();
                         } else {
-                            Log.d("NO HAY DATOS", "Error getting documents: ", task.getException());
+                            Log.d("ERROR FIREBASE:", "Error getting documents: ", task.getException());
                         }
                     }
                 });
@@ -145,7 +152,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
     @Override
     public ProductAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_product , parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_fav , parent, false);
         ProductAdapter.ViewHolder viewHolder = new ProductAdapter.ViewHolder(v);
         return viewHolder;
     }
@@ -190,6 +197,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
         private Button btn_show_prod;
         private Button btn_del;
+        private Button btn_addCart;
 
         private Context context;
 
@@ -207,6 +215,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
             btn_del = v.findViewById(R.id.btn_del);
             btn_show_prod = v.findViewById(R.id.btn_show_prod);
+            btn_addCart = v.findViewById(R.id.btn_add_cart);
 
             shared = context.getSharedPreferences(Constant.PREFERENCES, context.MODE_PRIVATE);
 
@@ -215,6 +224,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
         public void setOnClickListeners(){
             btn_del.setOnClickListener(this);
             btn_show_prod.setOnClickListener(this);
+            btn_addCart.setOnClickListener(this);
         }
 
         @Override
@@ -229,6 +239,44 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
                     showProd.putExtra("key", key.getText().toString());
                     context.startActivity(showProd);
                     break;
+                case R.id.btn_add_cart:
+                    addFav();
+                    break;
+            }
+        }
+
+        private int indexObject(JSONArray json) throws JSONException {
+            for (int i = 0; i < json.length(); i++) {
+                JSONObject object = json.getJSONObject(i);
+                if(object.getString("key").equals(key.getText().toString())){
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        private void delFav(){
+            try {
+                //Obtener datos guardados
+                String market = shared.getString(Constant.LIST_FAV, "[]");
+                JSONArray jMarket = new JSONArray(market);
+
+                int index = indexObject(jMarket);
+
+                if(index == -1){
+                    Toast.makeText(context, R.string.txt_msg_prod_del_exist, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                jMarket.remove(index);
+
+                SharedPreferences.Editor editor = shared.edit();
+                editor.putString(Constant.LIST_FAV, jMarket.toString());
+                editor.commit();
+
+                Toast.makeText(context, R.string.txt_msg_prod_del, Toast.LENGTH_SHORT).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
 
@@ -242,10 +290,10 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
             return false;
         }
 
-        private void delFav(){
+        private void addFav(){
             try {
                 //Obtener datos guardados
-                String market = shared.getString(Constant.ADD_CART, "[]");
+                String market = shared.getString(Constant.LIST_FAV, "[]");
                 JSONArray jMarket = new JSONArray(market);
 
                 if(existObject(jMarket)){
@@ -253,19 +301,17 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
                     return;
                 }
 
-                //Producto a eliminar en el json
-                /*
+                //Producto a guardar en el json
                 JSONObject product = new JSONObject();
                 product.put("user", shared.getString("email", null));
                 product.put("key", key.getText().toString());
-                product.put("count", 1);
 
                 jMarket.put(product);
 
                 SharedPreferences.Editor editor = shared.edit();
-                editor.putString(Constant.ADD_CART, jMarket.toString());
+                editor.putString(Constant.LIST_FAV, jMarket.toString());
                 editor.commit();
-                */
+
                 Toast.makeText(context, R.string.txt_msg_prod_add, Toast.LENGTH_SHORT).show();
             } catch (JSONException e) {
                 e.printStackTrace();

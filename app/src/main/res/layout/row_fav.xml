@@ -101,7 +101,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:gravity="center">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_del"
@@ -110,7 +111,15 @@
                     app:icon="@drawable/ic_favorite_24"
                     android:text="@string/btn_fav_product_del"
                     />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_add_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:icon="@drawable/ic_add_shopping_cart"
+                    android:text="@string/btn_add_cart"
+                    />
             </LinearLayout>
+
 
         </LinearLayout>
 

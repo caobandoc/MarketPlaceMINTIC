@@ -72,4 +72,8 @@
     <string name="txt_msg_prod_add">Producto agregado</string>
     <string name="btn_fav_product_del">Remover Favorito</string>
     <string name="btn_del_cart">Eliminar del Carro</string>
+    <string name="txt_msg_prod_del">Producto eliminado</string>
+    <string name="txt_msg_prod_del_exist">El producto ya se encuentra eliminado</string>
+    <string name="msg_empty_products">No tienes productos agregados</string>
+    <string name="msg_empty_favorites">No tienes favoritos agregados</string>
 </resources>
