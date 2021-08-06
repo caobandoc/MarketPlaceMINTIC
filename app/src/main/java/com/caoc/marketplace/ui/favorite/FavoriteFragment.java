@@ -27,6 +27,7 @@ import com.caoc.marketplace.ActivityProduct;
 import com.caoc.marketplace.R;
 import com.caoc.marketplace.database.model.Product;
 import com.caoc.marketplace.databinding.FragmentFavoriteBinding;
+import com.caoc.marketplace.ui.cart.CartFragment;
 import com.caoc.marketplace.util.Constant;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -57,6 +58,8 @@ public class FavoriteFragment extends Fragment {
 
     private SharedPreferences preferences;
 
+    private String email;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
@@ -68,7 +71,7 @@ public class FavoriteFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
 
         preferences = myself.getSharedPreferences(Constant.PREFERENCES, myself.MODE_PRIVATE);
-        String email = preferences.getString("email", null);
+        email = preferences.getString("email", null);
 
         if(email == null){
             Toast.makeText(myself, "ERROR AL INGRESAR EL LOGIN", Toast.LENGTH_SHORT).show();
@@ -82,6 +85,16 @@ public class FavoriteFragment extends Fragment {
             return root;
         }
 
+        init(fav);
+
+
+        rv_products = root.findViewById(R.id.rv_favorite);
+        rv_products.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        return root;
+    }
+
+    public void init(String fav){
         try {
             JSONArray favJson = new JSONArray(fav);
             keys = new ArrayList<String>();
@@ -117,12 +130,6 @@ public class FavoriteFragment extends Fragment {
                         }
                     }
                 });
-
-
-        rv_products = root.findViewById(R.id.rv_favorite);
-        rv_products.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        return root;
     }
 
     @Override
@@ -132,7 +139,7 @@ public class FavoriteFragment extends Fragment {
     }
 
     private void loadProducts(){
-        mAdapter = new ProductAdapter(products, myself);
+        mAdapter = new ProductAdapter(products, myself, this);
         rv_products.setAdapter(mAdapter);
 
     }
@@ -142,10 +149,12 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
     private List<Product> productModelList;
     private Activity myself;
+    private FavoriteFragment cf;
 
-    public ProductAdapter(List<Product> productModelList, Activity myself){
+    public ProductAdapter(List<Product> productModelList, Activity myself, FavoriteFragment cf){
         this.productModelList = productModelList;
         this.myself = myself;
+        this.cf = cf;
     }
 
     @Override
@@ -169,6 +178,10 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
                 price = price + ".";
             }
             price = price + priceR.charAt(i);
+        }
+
+        if(holder.getCf() == null){
+            holder.setCf(cf);
         }
 
         holder.key.setText(key);
@@ -199,6 +212,8 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
         private Context context;
 
+        private FavoriteFragment cf;
+
         private SharedPreferences shared;
 
         public ViewHolder(View v){
@@ -223,6 +238,14 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
             btn_del.setOnClickListener(this);
             btn_show_prod.setOnClickListener(this);
             btn_addCart.setOnClickListener(this);
+        }
+
+        public FavoriteFragment getCf(){
+            return cf;
+        }
+
+        public void setCf(FavoriteFragment cf){
+            this.cf = cf;
         }
 
         @Override
@@ -273,6 +296,9 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
                 editor.commit();
 
                 Toast.makeText(context, R.string.txt_msg_prod_del, Toast.LENGTH_SHORT).show();
+
+                cf.init(jMarket.toString());
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

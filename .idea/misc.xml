@@ -6,7 +6,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/drawable-hdpi/ic_add_shopping_cart.xml" value="0.2546052631578947" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2546052631578947" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/drawable-xhdpi/ic_add_shopping_cart.xml" value="0.2546052631578947" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/drawable-xxhdpi/ic_add_shopping_cart.xml" value="0.2546052631578947" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/drawable-xxxhdpi/ic_add_shopping_cart.xml" value="0.2546052631578947" />
         <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/drawable/format_vertical_align_center.xml" value="0.2546052631578947" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/drawable/ic_add_shopping_cart.xml" value="1.6125" />
         <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/drawable/ic_background_shopping.xml" value="0.17105263157894737" />
         <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/drawable/ic_basket_plus.xml" value="0.17105263157894737" />
         <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/drawable/ic_cart.xml" value="0.17105263157894737" />
@@ -26,9 +32,56 @@
         <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/drawable/ic_product_usd.xml" value="0.17105263157894737" />
         <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/drawable/ic_search_outline.xml" value="0.17105263157894737" />
         <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/drawable/side_nav_bar.xml" value="0.17105263157894737" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-land/activity_main.xml" value="0.21842105263157896" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-land/activity_main_cart.xml" value="0.21842105263157896" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-land/activity_main_product.xml" value="0.21842105263157896" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-land/activity_main_register.xml" value="0.33" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-land/activity_maps.xml" value="0.21480263157894736" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-land/activity_product_detail.xml" value="0.21480263157894736" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-land/fragment_cart.xml" value="0.21480263157894736" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-land/fragment_product.xml" value="0.21480263157894736" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-land/nav_header_pantalla_principal.xml" value="0.21480263157894736" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-land/row_cart.xml" value="0.21480263157894736" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-land/row_fav.xml" value="0.1" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-land/row_product.xml" value="0.1" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp-land/activity_main.xml" value="0.24866131191432397" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp-land/activity_main_cart.xml" value="0.24866131191432397" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp-land/activity_main_product.xml" value="0.24866131191432397" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp-land/activity_main_register.xml" value="0.24866131191432397" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp-land/activity_maps.xml" value="0.24866131191432397" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp-land/activity_pantalla_principal.xml" value="0.24866131191432397" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp-land/activity_product_detail.xml" value="0.24866131191432397" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp-land/app_bar_pantalla_principal.xml" value="0.24866131191432397" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp-land/content_pantalla_principal.xml" value="0.24866131191432397" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp-land/fragment_cart.xml" value="0.24866131191432397" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp-land/fragment_favorite.xml" value="0.24866131191432397" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp-land/fragment_home.xml" value="0.24866131191432397" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp-land/fragment_product.xml" value="0.24866131191432397" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp-land/nav_header_pantalla_principal.xml" value="0.24866131191432397" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp-land/row_cart.xml" value="0.24866131191432397" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp-land/row_fav.xml" value="0.24866131191432397" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp-land/row_product.xml" value="0.24866131191432397" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp/activity_main.xml" value="0.22301912568306012" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp/activity_main_cart.xml" value="0.2189207650273224" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp/activity_main_product.xml" value="0.5136217948717948" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp/activity_main_register.xml" value="0.2189207650273224" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp/activity_maps.xml" value="0.2189207650273224" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp/activity_pantalla_principal.xml" value="0.2189207650273224" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp/app_bar_pantalla_principal.xml" value="0.2189207650273224" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp/content_pantalla_principal.xml" value="0.2189207650273224" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp/fragment_cart.xml" value="0.2189207650273224" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp/fragment_favorite.xml" value="0.2189207650273224" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp/fragment_home.xml" value="0.2189207650273224" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp/nav_header_pantalla_principal.xml" value="0.2189207650273224" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp/row_cart.xml" value="0.2189207650273224" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp/row_fav.xml" value="0.2189207650273224" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw600dp/row_product.xml" value="0.2189207650273224" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw720dp/activity_main.xml" value="0.2189207650273224" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw720dp/activity_main_cart.xml" value="0.2189207650273224" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout-sw720dp/activity_main_product.xml" value="0.2189207650273224" />
         <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout/activity_main.xml" value="0.16085526315789472" />
         <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout/activity_main_cart.xml" value="0.16085526315789472" />
-        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout/activity_main_product.xml" value="0.16085526315789472" />
+        <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout/activity_main_product.xml" value="0.2189207650273224" />
         <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout/activity_main_register.xml" value="0.25" />
         <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout/activity_maps.xml" value="0.18947368421052632" />
         <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/layout/activity_pantalla_principal.xml" value="0.16085526315789472" />

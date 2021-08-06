@@ -60,6 +60,8 @@ public class CartFragment extends Fragment {
 
     private Button btn_buy;
 
+    String email;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentCartBinding.inflate(inflater, container, false);
@@ -80,7 +82,7 @@ public class CartFragment extends Fragment {
         });
 
         preferences = myself.getSharedPreferences(Constant.PREFERENCES, myself.MODE_PRIVATE);
-        String email = preferences.getString("email", null);
+        email = preferences.getString("email", null);
 
         if(email == null){
             Toast.makeText(myself, "ERROR AL INGRESAR EL LOGIN", Toast.LENGTH_SHORT).show();
@@ -95,6 +97,15 @@ public class CartFragment extends Fragment {
             return root;
         }
 
+        rv_products = root.findViewById(R.id.rv_cart);
+        rv_products.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        init(fav);
+
+        return root;
+    }
+
+    public void init(String fav){
         try {
             carJson = new JSONArray(fav);
             keys = new ArrayList<String>();
@@ -137,12 +148,6 @@ public class CartFragment extends Fragment {
                         }
                     }
                 });
-
-
-        rv_products = root.findViewById(R.id.rv_cart);
-        rv_products.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        return root;
     }
 
     private int getCount(String key) throws JSONException{
@@ -166,6 +171,10 @@ public class CartFragment extends Fragment {
         mAdapter = new ProductAdapter(products, myself, this);
         rv_products.setAdapter(mAdapter);
 
+    }
+
+    public void refreshAdapter(){
+        mAdapter.notifyDataSetChanged();
     }
 
     public int getTotal(){
@@ -262,6 +271,10 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
     @Override
     public int getItemCount(){
         return productModelList.size();
+    }
+
+    public void removeItem(int pos){
+        productModelList.remove(pos);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -462,6 +475,9 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
                 editor.commit();
 
                 Toast.makeText(context, R.string.txt_msg_prod_del, Toast.LENGTH_SHORT).show();
+
+                cf.init(jMarket.toString());
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
