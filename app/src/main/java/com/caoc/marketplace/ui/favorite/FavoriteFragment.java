@@ -138,6 +138,10 @@ public class FavoriteFragment extends Fragment {
         binding = null;
     }
 
+    public String getEmail(){
+        return email;
+    }
+
     private void loadProducts(){
         mAdapter = new ProductAdapter(products, myself, this);
         rv_products.setAdapter(mAdapter);
@@ -269,7 +273,8 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
         private int indexObject(JSONArray json) throws JSONException {
             for (int i = 0; i < json.length(); i++) {
                 JSONObject object = json.getJSONObject(i);
-                if(object.getString("key").equals(key.getText().toString())){
+                if(object.getString("key").equals(key.getText().toString())
+                && object.getString("user").equals(cf.getEmail())){
                     return i;
                 }
             }
