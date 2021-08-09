@@ -95,6 +95,7 @@
 
     <string name="action_log_out">Log out</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="txt_location">SELLER LOCATION:</string>
 
 
 </resources>

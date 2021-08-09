@@ -33,7 +33,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:scaleType="centerCrop"
+                android:scaleType="centerInside"
                 android:id="@+id/row_image"
                 android:layout_margin="10dp"
                 />

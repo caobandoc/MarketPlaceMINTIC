@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "893400576310",
+    "project_id": "marketplaceuc",
+    "storage_bucket": "marketplaceuc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893400576310:android:85ec8d27b57751a8250397",
+        "android_client_info": {
+          "package_name": "com.caoc.marketplace"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "893400576310-f8s6u7qbb2a21mhlenupp359h0648dsk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUuiSDRhcW_KLPbjmGjEdYejBzM7hYUCM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "893400576310-f8s6u7qbb2a21mhlenupp359h0648dsk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
