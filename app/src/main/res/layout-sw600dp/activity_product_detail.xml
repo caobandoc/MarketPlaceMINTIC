@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_titulo"
                 android:text="titulo"
+                android:textSize="50dp"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 />
             <TextView
@@ -40,19 +41,33 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_price"
                 android:text="precio"
+                android:textSize="40dp"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:maxHeight="400dp"
                 android:layout_marginTop="8dp"
                 android:text="descripcion"
+                android:textSize="50dp"
                 android:id="@+id/tv_description"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textColor="@color/black"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/txt_location"
+                android:textSize="40dp"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 />
 
             <fragment xmlns:android="http://schemas.android.com/apk/res/android"

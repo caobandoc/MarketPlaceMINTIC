@@ -19,6 +19,7 @@
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/drawable-xxhdpi/ic_add_shopping_cart.xml" value="0.22135416666666666" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/drawable-xxhdpi/side_nav_bar.xml" value="0.22135416666666666" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/drawable-xxxhdpi/ic_add_shopping_cart.xml" value="0.33203125" />
+        <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/drawable-xxxhdpi/ic_email.xml" value="0.24177631578947367" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/drawable-xxxhdpi/side_nav_bar.xml" value="0.13980263157894737" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/drawable/ic_add_shopping_cart.xml" value="1.53125" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/drawable/ic_lock.xml" value="1.328125" />
@@ -27,6 +28,7 @@
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/layout-land/row_cart.xml" value="0.25452196382428943" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/layout-land/row_product.xml" value="0.25452196382428943" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/layout-sw600dp/activity_main.xml" value="0.15390625" />
+        <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/layout-sw600dp/activity_product_detail.xml" value="0.2694672131147541" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/layout-sw720dp-land/row_fav.xml" value="0.1318607764390897" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/layout-sw720dp/row_fav.xml" value="0.15390625" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/layout/activity_main.xml" value="0.25" />
