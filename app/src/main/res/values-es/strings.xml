@@ -83,4 +83,8 @@
     <string name="txt_msg_empty_gps">Selecciona una ubicación</string>
     <string name="txt_location">UBICACIÓN DEL VENDEDOR:</string>
     <string name="title_activity_maps">MapasActividad</string>
+    <string name="txt_tittle_shop">COMPRA</string>
+    <string name="txt_success_shop">Compra realizada</string>
+    <string name="btn_shop_clear">Limpiar Carrito</string>
+    <string name="txt_success_clear">Se limpió el carro de compras</string>
 </resources>

@@ -17,8 +17,11 @@
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/drawable-xhdpi/ic_add_shopping_cart.xml" value="0.33203125" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/drawable-xhdpi/side_nav_bar.xml" value="0.33203125" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/drawable-xxhdpi/ic_add_shopping_cart.xml" value="0.22135416666666666" />
+        <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/drawable-xxhdpi/ic_basket_plus.xml" value="0.22135416666666666" />
+        <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/drawable-xxhdpi/ic_logout.xml" value="0.22135416666666666" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/drawable-xxhdpi/side_nav_bar.xml" value="0.22135416666666666" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/drawable-xxxhdpi/ic_add_shopping_cart.xml" value="0.33203125" />
+        <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/drawable-xxxhdpi/ic_email.xml" value="0.24177631578947367" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/drawable-xxxhdpi/side_nav_bar.xml" value="0.13980263157894737" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/drawable/ic_add_shopping_cart.xml" value="1.53125" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/drawable/ic_lock.xml" value="1.328125" />
@@ -27,6 +30,7 @@
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/layout-land/row_cart.xml" value="0.25452196382428943" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/layout-land/row_product.xml" value="0.25452196382428943" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/layout-sw600dp/activity_main.xml" value="0.15390625" />
+        <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/layout-sw600dp/activity_product_detail.xml" value="0.2694672131147541" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/layout-sw720dp-land/row_fav.xml" value="0.1318607764390897" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/layout-sw720dp/row_fav.xml" value="0.15390625" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/layout/activity_main.xml" value="0.25" />
@@ -35,10 +39,12 @@
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/layout/activity_product_detail.xml" value="0.33" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/layout/app_bar_pantalla_principal.xml" value="0.12960526315789472" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/layout/content_pantalla_principal.xml" value="0.12960526315789472" />
+        <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/layout/fragment_cart.xml" value="0.530241935483871" />
+        <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/layout/fragment_product.xml" value="0.530241935483871" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/layout/nav_header_pantalla_principal.xml" value="0.12960526315789472" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/layout/row_product.xml" value="0.12960526315789472" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/menu/activity_main_drawer.xml" value="0.12960526315789472" />
-        <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/menu/pantalla_principal.xml" value="0.12960526315789472" />
+        <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/menu/pantalla_principal.xml" value="0.5" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3828125" />
         <entry key="..\:/ESTUDIO/UCALDAS/Programacion/MarketPlaceMINTIC/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3828125" />
         <entry key="..\:/Users/CAOBANDOC/AndroidStudioProjects/Marketplace/app/src/main/res/drawable-hdpi/ic_add_shopping_cart.xml" value="0.2546052631578947" />
