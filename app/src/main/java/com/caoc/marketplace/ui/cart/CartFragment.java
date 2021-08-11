@@ -1,7 +1,9 @@
 package com.caoc.marketplace.ui.cart;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -36,6 +38,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CartFragment extends Fragment {
@@ -77,21 +80,21 @@ public class CartFragment extends Fragment {
         btn_buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buy(v);
+                buy();
             }
         });
 
         preferences = myself.getSharedPreferences(Constant.PREFERENCES, myself.MODE_PRIVATE);
         email = preferences.getString("email", null);
 
-        if(email == null){
+        if (email == null) {
             Toast.makeText(myself, "ERROR AL INGRESAR EL LOGIN", Toast.LENGTH_SHORT).show();
             return root;
         }
 
         String fav = preferences.getString(Constant.LIST_CART, "[]");
 
-        if(fav.equals("[]")){
+        if (fav.equals("[]")) {
             Toast.makeText(myself, R.string.msg_empty_products, Toast.LENGTH_SHORT).show();
             setTotal(total);
             return root;
@@ -105,13 +108,13 @@ public class CartFragment extends Fragment {
         return root;
     }
 
-    public void init(String fav){
+    public void init(String fav) {
         try {
             carJson = new JSONArray(fav);
             keys = new ArrayList<String>();
             for (int i = 0; i < carJson.length(); i++) {
                 JSONObject object = carJson.getJSONObject(i);
-                if(object.getString("user").equals(email)){
+                if (object.getString("user").equals(email)) {
                     keys.add(object.getString("key"));
                 }
             }
@@ -129,14 +132,14 @@ public class CartFragment extends Fragment {
                             products = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
-                                if(keys.contains(document.getId())){
+                                if (keys.contains(document.getId())) {
                                     Product prod = document.toObject(Product.class);
                                     prod.setKey(document.getId());
 
                                     try {
-                                        prod.setCount( getCount(document.getId()) );
+                                        prod.setCount(getCount(document.getId()));
                                     } catch (JSONException e) {
-                                        prod.setCount( 1 );
+                                        prod.setCount(1);
                                     }
                                     products.add(prod);
                                 }
@@ -150,10 +153,10 @@ public class CartFragment extends Fragment {
                 });
     }
 
-    private int getCount(String key) throws JSONException{
+    private int getCount(String key) throws JSONException {
         for (int i = 0; i < carJson.length(); i++) {
             JSONObject object = carJson.getJSONObject(i);
-            if(object.getString("key").equals(key)){
+            if (object.getString("key").equals(key)) {
                 return object.getInt(Constant.COUNT);
             }
         }
@@ -167,30 +170,30 @@ public class CartFragment extends Fragment {
         binding = null;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 
-    private void loadProducts(){
+    private void loadProducts() {
         mAdapter = new ProductAdapter(products, myself, this);
         rv_products.setAdapter(mAdapter);
 
     }
 
-    public void refreshAdapter(){
+    public void refreshAdapter() {
         mAdapter.notifyDataSetChanged();
     }
 
-    public int getTotal(){
+    public int getTotal() {
         return total;
     }
 
-    public void setTotal(int t){
+    public void setTotal(int t) {
         total = t;
         String txt = String.valueOf(t);
         String fin = "$";
-        for(int i = 0; i<txt.length();i++){
-            if(fin.length()>1 && (txt.length()-i)%3 == 0){
+        for (int i = 0; i < txt.length(); i++) {
+            if (fin.length() > 1 && (txt.length() - i) % 3 == 0) {
                 fin = fin + ".";
             }
             fin = fin + txt.charAt(i);
@@ -198,19 +201,77 @@ public class CartFragment extends Fragment {
         tv_total.setText(fin);
     }
 
-    public void buy(View v){
-        Toast.makeText(myself, "BOTON COMPRAR", Toast.LENGTH_SHORT).show();
+    public void buy() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(myself);
+
+        String market = preferences.getString(Constant.LIST_CART, "[]");
+        try{
+            JSONArray jMarket = new JSONArray(market);
+            if(jMarket.length() == 0){
+                Toast.makeText(myself, R.string.msg_empty_products, Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }catch(JSONException e){
+
+        }
+
+        builder.setTitle(R.string.txt_tittle_shop);
+        builder.setMessage(R.string.txt_success_shop);
+        builder.setPositiveButton(R.string.btn_shop_clear, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                clearCart();
+                tv_total.setText("$0");
+            }
+        });
+        builder.setNegativeButton(R.string.btn_cancel, null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void clearCart() {
+        try {
+            //Obtener datos guardados
+            String market = preferences.getString(Constant.LIST_CART, "[]");
+            JSONArray jMarket = new JSONArray(market);
+
+            List<Integer> index = new ArrayList<>();
+
+            for (int i = 0; i < jMarket.length(); i++) {
+                JSONObject object = jMarket.getJSONObject(i);
+                if (object.getString("user").equals(email)) {
+                    index.add(i);
+                }
+            }
+
+            Collections.sort(index, Collections.reverseOrder());
+
+            for(int i : index)
+                jMarket.remove(i);
+
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString(Constant.LIST_CART, jMarket.toString());
+            editor.commit();
+
+            Toast.makeText(myself, R.string.txt_success_clear, Toast.LENGTH_SHORT).show();
+
+            init(jMarket.toString());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
 
-class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
+class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
     private List<Product> productModelList;
     private Activity myself;
     private SharedPreferences shared;
     private CartFragment cf;
 
-    public ProductAdapter(List<Product> productModelList, Activity myself, CartFragment cf){
+    public ProductAdapter(List<Product> productModelList, Activity myself, CartFragment cf) {
         this.productModelList = productModelList;
         this.myself = myself;
         this.cf = cf;
@@ -219,7 +280,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_cart , parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_cart, parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }
@@ -233,8 +294,8 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
         String urlImage = this.productModelList.get(position).getImage();
         String priceR = this.productModelList.get(position).getPrice();
         String price = "$";
-        for(int i = 0; i<priceR.length();i++){
-            if(price.length()>1 && (priceR.length()-i)%3 == 0){
+        for (int i = 0; i < priceR.length(); i++) {
+            if (price.length() > 1 && (priceR.length() - i) % 3 == 0) {
                 price = price + ".";
             }
             price = price + priceR.charAt(i);
@@ -242,8 +303,8 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
         String count = String.valueOf(this.productModelList.get(position).getCount());
         String totalR = String.valueOf(Integer.parseInt(priceR) * this.productModelList.get(position).getCount());
         String total = "$";
-        for(int i = 0; i<totalR.length();i++){
-            if(total.length()>1 && (totalR.length()-i)%3 == 0){
+        for (int i = 0; i < totalR.length(); i++) {
+            if (total.length() > 1 && (totalR.length() - i) % 3 == 0) {
                 total = total + ".";
             }
             total = total + totalR.charAt(i);
@@ -252,9 +313,9 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
         //SUMATORIATOTAL:
         int t = cf.getTotal();
         int tAcum = Integer.parseInt(totalR);
-        cf.setTotal(t+tAcum);
+        cf.setTotal(t + tAcum);
 
-        if(holder.getCf() == null){
+        if (holder.getCf() == null) {
             holder.setCf(cf);
         }
 
@@ -273,15 +334,15 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
     }
 
     @Override
-    public int getItemCount(){
+    public int getItemCount() {
         return productModelList.size();
     }
 
-    public void removeItem(int pos){
+    public void removeItem(int pos) {
         productModelList.remove(pos);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView name;
         private TextView description;
         private ImageView image;
@@ -303,7 +364,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
         private Product product;
 
-        public ViewHolder(View v){
+        public ViewHolder(View v) {
             super(v);
             context = v.getContext();
 
@@ -324,15 +385,15 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
         }
 
-        public void setCf(CartFragment cf){
+        public void setCf(CartFragment cf) {
             this.cf = cf;
         }
 
-        public CartFragment getCf(){
+        public CartFragment getCf() {
             return cf;
         }
 
-        public void setOnClickListeners(){
+        public void setOnClickListeners() {
             btn_show_prod.setOnClickListener(this);
             btn_del.setOnClickListener(this);
             btn_add.setOnClickListener(this);
@@ -343,7 +404,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
         @Override
         public void onClick(View v) {
             int cantidad = Integer.parseInt((String) count.getText());
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.btn_del:
                     delCart();
                     break;
@@ -354,7 +415,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
                     context.startActivity(showProd);
                     break;
                 case R.id.btn_add:
-                    if(cantidad == 99){
+                    if (cantidad == 99) {
                         Toast.makeText(context, R.string.msg_add_max, Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -368,7 +429,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
                         int index = indexObject(jMarket);
 
-                        if(index == -1){
+                        if (index == -1) {
                             Toast.makeText(context, R.string.txt_msg_prod_del_exist, Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -378,7 +439,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
                         updateValor(cantidad);
 
-                        cf.setTotal(cf.getTotal()+Integer.parseInt(product.getPrice()));
+                        cf.setTotal(cf.getTotal() + Integer.parseInt(product.getPrice()));
 
                         SharedPreferences.Editor editor = shared.edit();
                         editor.putString(Constant.LIST_CART, jMarket.toString());
@@ -391,7 +452,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
                     break;
                 case R.id.btn_substract:
-                    if(cantidad == 1){
+                    if (cantidad == 1) {
                         Toast.makeText(context, R.string.msg_substract_min, Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -405,7 +466,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
                         int index = indexObject(jMarket);
 
-                        if(index == -1){
+                        if (index == -1) {
                             Toast.makeText(context, R.string.txt_msg_prod_del_exist, Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -415,7 +476,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
                         updateValor(cantidad);
 
-                        cf.setTotal(cf.getTotal()-Integer.parseInt(product.getPrice()));
+                        cf.setTotal(cf.getTotal() - Integer.parseInt(product.getPrice()));
 
                         SharedPreferences.Editor editor = shared.edit();
                         editor.putString(Constant.LIST_CART, jMarket.toString());
@@ -432,15 +493,15 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
             }
         }
 
-        private void updateValor(int cantidad){
+        private void updateValor(int cantidad) {
             count.setText(String.valueOf(cantidad));
             int valorActual = Integer.parseInt(product.getPrice());
             String priceR = String.valueOf(valorActual * cantidad);
             StringBuilder newTotal = new StringBuilder();
             newTotal.append("$");
 
-            for(int i = 0; i<priceR.length();i++){
-                if(newTotal.length()>1 && (priceR.length()-i)%3 == 0){
+            for (int i = 0; i < priceR.length(); i++) {
+                if (newTotal.length() > 1 && (priceR.length() - i) % 3 == 0) {
                     newTotal.append(".");
                 }
                 newTotal.append(priceR.charAt(i));
@@ -452,15 +513,15 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
         private int indexObject(JSONArray json) throws JSONException {
             for (int i = 0; i < json.length(); i++) {
                 JSONObject object = json.getJSONObject(i);
-                if(object.getString("key").equals(key.getText().toString())
-                        && object.getString("user").equals(cf.getEmail())){
+                if (object.getString("key").equals(key.getText().toString())
+                        && object.getString("user").equals(cf.getEmail())) {
                     return i;
                 }
             }
             return -1;
         }
 
-        private void delCart(){
+        private void delCart() {
             try {
                 //Obtener datos guardados
                 String market = shared.getString(Constant.LIST_CART, "[]");
@@ -468,7 +529,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
                 int index = indexObject(jMarket);
 
-                if(index == -1){
+                if (index == -1) {
                     Toast.makeText(context, R.string.txt_msg_prod_del_exist, Toast.LENGTH_SHORT).show();
                     return;
                 }
